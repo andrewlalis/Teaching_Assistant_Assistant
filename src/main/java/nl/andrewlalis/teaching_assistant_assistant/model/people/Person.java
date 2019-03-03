@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Inheritance(
         strategy = InheritanceType.JOINED
 )
-public class Person extends BasicEntity {
+public abstract class Person extends BasicEntity {
 
     @Column(nullable = false)
     private String firstName;

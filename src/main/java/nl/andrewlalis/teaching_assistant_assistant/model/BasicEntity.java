@@ -10,10 +10,12 @@ import java.util.Date;
  * in this system should extend from BasicEntity.
  */
 @MappedSuperclass
-public class BasicEntity {
+public abstract class BasicEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
     private Long id;
 
     @Temporal(

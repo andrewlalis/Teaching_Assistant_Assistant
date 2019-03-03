@@ -8,4 +8,10 @@ import javax.persistence.Entity;
 @Entity
 public class Student extends Person {
 
+
+
+    public Student(String firstName, String lastName, String emailAddress) {
+        super(firstName, lastName, emailAddress);
+    }
+
 }

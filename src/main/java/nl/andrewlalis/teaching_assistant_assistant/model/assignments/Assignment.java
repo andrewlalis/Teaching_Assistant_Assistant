@@ -31,6 +31,7 @@ public class Assignment extends BasicEntity {
             fetch = FetchType.EAGER,
             orphanRemoval = true
     )
+    @JoinColumn(name = "assignment_id")
     private List<AssignmentSection> sections;
 
 
