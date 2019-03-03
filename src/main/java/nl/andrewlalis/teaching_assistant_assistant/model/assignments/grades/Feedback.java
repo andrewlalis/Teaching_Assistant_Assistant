@@ -1,4 +1,4 @@
-package nl.andrewlalis.teaching_assistant_assistant.model.assignments;
+package nl.andrewlalis.teaching_assistant_assistant.model.assignments.grades;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
 
@@ -14,13 +14,13 @@ import javax.persistence.*;
 public abstract class Feedback extends BasicEntity {
 
     /**
-     * The section to which this feedback belongs.
+     * The graded section to which this feedback belongs.
      */
     @ManyToOne(
             fetch = FetchType.LAZY,
             optional = false
     )
-    private AssignmentSection assignmentSection;
+    private SectionGrade assignmentSection;
 
 
 
