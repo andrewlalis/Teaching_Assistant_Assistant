@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div th:replace="~{fragments/header :: header}">&nbsp;</div>
+<div th:replace="~{fragments/header :: header}"></div>
 
 <div class="content_container">
     <div th:replace="${content}">
@@ -24,6 +24,8 @@
         </p>
     </div>
 </div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

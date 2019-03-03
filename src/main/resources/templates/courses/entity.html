@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${course.getName()}"></title>
 </head>
 <body>
 
-<section>
+<div id="content">
     <h1 th:text="${course.getName()}"></h1>
     <h3 th:text="${course.getCode()}"></h3>
     <h3>Created on: <span th:text="${course.getCreatedOn()}"></span></h3>
     <h3>Id: <span th:text="${course.getId()}"></span></h3>
-</section>
+</div>
+
+<div id="sidebar">
+
+</div>
 
 </body>
 </html>

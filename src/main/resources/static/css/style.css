@@ -1,3 +1,8 @@
+/* Set the font for the whole website here. */
+body {
+    font-family: sans-serif;
+}
+
 .content_container {
     width: 50%;
     margin-left: auto;
