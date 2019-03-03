@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::section})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
 <head>
     <title>Courses</title>
 </head>
 <body>
 
-<section>
+<div id="content">
     <table>
         <tr>
             <th>Name</th>
@@ -18,7 +18,19 @@
             <td th:text="${course.getCode()}"></td>
         </tr>
     </table>
-</section>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        Create new course
+    </div>
+    <div class="sidebar_block">
+        Do something else
+    </div>
+    <div class="sidebar_block">
+        Click this link!
+    </div>
+</div>
 
 </body>
 </html>

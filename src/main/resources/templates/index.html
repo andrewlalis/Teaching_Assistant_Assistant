@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::section})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
 <head>
     <title>Homepage</title>
 </head>
 <body>
 
-<div th:replace="~{fragments/header :: header}">&nbsp;</div>
-
-<section>
+<div id="content">
     <p>
-        Welcome to the home page.
+        Welcome to the home page. To find the courses in this application please follow the link to <a th:href="@{/courses}">courses</a>.
     </p>
-</section>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        This is an example sidebar block.
+    </div>
+</div>
 
 </body>
 </html>

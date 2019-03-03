@@ -10,14 +10,15 @@ body {
     color: whitesmoke;
     padding-bottom: 20px;
     padding-top: 20px;
+    height: 30px;
 }
 
 .header_title {
     margin-top: auto;
     margin-bottom: auto;
-    padding: 10px;
     width: 25%;
     display: inline;
+    font-size: 30px;
 }
 
 .header_link_list {
