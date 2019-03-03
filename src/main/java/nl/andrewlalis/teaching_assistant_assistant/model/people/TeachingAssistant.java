@@ -17,7 +17,7 @@ public class TeachingAssistant extends Person {
      * The list of all feedback given by a teaching assistant.
      */
     @OneToMany
-    @JoinColumn(name = "teachingAssistant_id")
+    @JoinColumn(name = "teaching_assistant_id")
     private List<SectionGrade> sectionGrades;
 
 }

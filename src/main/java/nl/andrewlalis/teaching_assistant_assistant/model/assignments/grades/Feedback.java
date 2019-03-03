@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Inheritance(
         strategy = InheritanceType.JOINED
 )
-public abstract class Feedback extends BasicEntity {
+public class Feedback extends BasicEntity {
 
     /**
      * The graded section to which this feedback belongs.
@@ -22,6 +22,7 @@ public abstract class Feedback extends BasicEntity {
     )
     private SectionGrade assignmentSection;
 
-
+    @Column
+    private String text;
 
 }

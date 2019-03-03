@@ -28,7 +28,7 @@ public class AssignmentGrade extends BasicEntity {
             fetch = FetchType.EAGER,
             orphanRemoval = true
     )
-    @JoinColumn(name = "assignmentGrade_id")
+    @JoinColumn(name = "assignment_grade_id")
     private List<SectionGrade> sectionGrades;
 
 }

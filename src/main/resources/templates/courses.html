@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::section})}">
+<head>
+    <title>Courses</title>
+</head>
+<body>
+
+<section>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+        </tr>
+        <tr th:each="course: ${courses}">
+            <td>
+                <a th:href="@{/courses/{id}(id=${course.getId()})}"  th:text="${course.getName()}"></a>
+            </td>
+            <td th:text="${course.getCode()}"></td>
+        </tr>
+    </table>
+</section>
+
+</body>
+</html>

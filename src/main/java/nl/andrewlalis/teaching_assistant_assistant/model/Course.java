@@ -76,4 +76,27 @@ public class Course extends BasicEntity {
         this.code = code;
     }
 
+    /*
+    Getters and Setters
+     */
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public List<TeachingAssistant> getTeachingAssistants() {
+        return teachingAssistants;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
 }

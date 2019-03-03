@@ -2,21 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Teaching Assistant Assistant</title>
 </head>
 <body>
 
-<nav th:fragment="header">
-    <ul>
-        <li>
-            <a href="#" th:href="@{/}">Home</a>
-        </li>
-        <li>
-            <a href="#" th:href="@{/courses}">Courses</a>
-        </li>
-        <li>
-            <a href="#" th:href="@{/students}">Students</a>
-        </li>
+
+<nav th:fragment="header" class="header_bar">
+    <link rel="stylesheet" href="../../../resources/static/css/header.css" th:href="@{/css/header.css}"/>
+    <h1 class="header_title">Teaching Assistant Assistant</h1>
+    <ul class="header_link_list">
+        <li><a href="/" th:href="@{/}">Home</a>
+        <li><a href="/courses" th:href="@{/courses}">Courses</a>
+        <li><a href="/students" th:href="@{/students}">Students</a>
     </ul>
 </nav>
 

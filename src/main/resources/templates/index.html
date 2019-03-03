@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::section})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Homepage</title>
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: header}">&nbsp;</div>
 
-<div>
+<section>
     <p>
         Welcome to the home page.
     </p>
-</div>
+</section>
 
 </body>
 </html>

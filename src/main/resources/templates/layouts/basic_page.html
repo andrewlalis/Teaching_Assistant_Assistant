@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:replace="${title}">basic_page</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}">&nbsp;</div>
+
+<div th:replace="${content}">
+    <p>
+        Basic page content block.
+    </p>
+</div>
+
+</body>
+</html>
