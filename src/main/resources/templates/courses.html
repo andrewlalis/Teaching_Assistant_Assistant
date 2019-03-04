@@ -10,12 +10,14 @@
         <tr>
             <th>Name</th>
             <th>Code</th>
+            <th>Created at</th>
         </tr>
         <tr th:each="course: ${courses}">
             <td>
                 <a th:href="@{/courses/{id}(id=${course.getId()})}"  th:text="${course.getName()}"></a>
             </td>
             <td th:text="${course.getCode()}"></td>
+            <td th:text="${course.getCreatedOn()}"></td>
         </tr>
     </table>
 </div>

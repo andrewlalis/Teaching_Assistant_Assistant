@@ -35,4 +35,17 @@ public abstract class BasicEntity {
         return this.createdOn;
     }
 
+    /**
+     * Two entities are equal if they have the same id.
+     * @param o The other object.
+     * @return True if the entities are the same, or false if not.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BasicEntity) {
+            BasicEntity other = (BasicEntity) o;
+            return other.id.equals(this.id);
+        }
+        return false;
+    }
 }

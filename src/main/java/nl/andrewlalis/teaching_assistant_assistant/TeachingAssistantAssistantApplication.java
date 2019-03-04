@@ -1,6 +1,8 @@
 package nl.andrewlalis.teaching_assistant_assistant;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.groups.StudentGroup;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,5 +27,7 @@ public class TeachingAssistantAssistantApplication implements CommandLineRunner 
 		courseRepository.save(new Course("Program Correctness", "PC-002"));
 		System.out.println("Saved two courses.");
 		System.out.println("Course count: " + courseRepository.count());
+		StudentGroup sg = new StudentGroup();
+		sg.addMember(new Student("Andrew", "Lalis", "andrewlalisofficial@gmail.com"));
 	}
 }

@@ -1,6 +1,7 @@
 package nl.andrewlalis.teaching_assistant_assistant.model.people;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.groups.Group;
 
 import javax.persistence.*;
 
@@ -22,6 +23,11 @@ public abstract class Person extends BasicEntity {
     @Column
     private String emailAddress;
 
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    private Group<?> group;
+
     /**
      * Default constructor for JPA.
      */
@@ -39,4 +45,23 @@ public abstract class Person extends BasicEntity {
         this.emailAddress = emailAddress;
     }
 
+    /*
+    Getters and Setters
+     */
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getEmailAddress() {
+        return this.emailAddress;
+    }
+
+    public Group<?> getGroup() {
+        return this.group;
+    }
 }

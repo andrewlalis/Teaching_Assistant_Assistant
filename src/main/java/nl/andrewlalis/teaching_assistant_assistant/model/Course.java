@@ -45,9 +45,9 @@ public class Course extends BasicEntity {
      */
     @ManyToMany
     @JoinTable(
-            name = "course_teachingAssistant",
+            name = "course_teaching_assistant",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "teachingAssistant_id")
+            inverseJoinColumns = @JoinColumn(name = "teaching_assistant_id")
     )
     private List<TeachingAssistant> teachingAssistants;
 
