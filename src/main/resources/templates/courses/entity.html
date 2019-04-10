@@ -8,9 +8,24 @@
 
 <div id="content">
     <h1 th:text="${course.getName()}"></h1>
-    <h3 th:text="${course.getCode()}"></h3>
-    <h3>Created on: <span th:text="${course.getCreatedOn()}"></span></h3>
-    <h3>Id: <span th:text="${course.getId()}"></span></h3>
+    <h2 th:text="${course.getCode()}"></h2>
+    <h2>Created on: <span th:text="${course.getCreatedOn()}"></span></h2>
+    <h2>Id: <span th:text="${course.getId()}"></span></h2>
+    <hr>
+    <h3>Teaching Assistant Groups (<span th:text="${course.getTeachingAssistantTeams().size()}"></span>):</h3>
+    <table>
+        <tr th:each="teachingAssistantTeam: ${course.getTeachingAssistantTeams()}">
+            <td th:text="${teachingAssistantTeam.getId()}"></td>
+            <td th:text="${teachingAssistantTeam.toString()}"></td>
+        </tr>
+    </table>
+    <h3>Student Groups (<span th:text="${course.getStudentTeams().size()}"></span>):</h3>
+    <table>
+        <tr th:each="studentTeam: ${course.getStudentTeams()}">
+            <td th:text="${studentTeam.getId()}"></td>
+            <td th:text="${studentTeam.toString()}"></td>
+        </tr>
+    </table>
 </div>
 
 <div id="sidebar">

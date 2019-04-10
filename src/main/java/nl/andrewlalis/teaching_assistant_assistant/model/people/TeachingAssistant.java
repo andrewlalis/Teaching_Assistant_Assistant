@@ -1,10 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.model.people;
 
-import nl.andrewlalis.teaching_assistant_assistant.model.Course;
-import nl.andrewlalis.teaching_assistant_assistant.model.assignments.grades.SectionGrade;
-
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
 
 /**
  * Represents a teaching assistant of a course, or in other words, a grader and administrator.
@@ -12,30 +8,29 @@ import java.util.List;
 @Entity
 public class TeachingAssistant extends Person {
 
-    /**
-     * The list of courses which this teaching assistant is a member of.
-     */
-    @ManyToMany
-    @JoinTable(
-            name = "course_teaching_assistant",
-            joinColumns = @JoinColumn(name = "teaching_assistant_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> courses;
-
-    /**
-     * The list of all feedback given by a teaching assistant.
-     */
-    @OneToMany
-    @JoinColumn(name = "teaching_assistant_id")
-    private List<SectionGrade> sectionGrades;
-
-    @Column
-    private TeachingAssistantRole role;
+//    /**
+//     * The list of all feedback given by a teaching assistant.
+//     */
+//    @OneToMany
+//    @JoinColumn(name = "teaching_assistant_id")
+//    private List<SectionGrade> sectionGrades;
 
     /**
      * Default constructor for JPA.
      */
-    protected TeachingAssistant() {}
+    protected TeachingAssistant() {
+//        this.sectionGrades = new ArrayList<>();
+    }
 
+    public TeachingAssistant(String firstName, String lastName, String emailAddress) {
+        super(firstName, lastName, emailAddress);
+    }
+
+//    public List<SectionGrade> getSectionGrades() {
+//        return this.sectionGrades;
+//    }
+//
+//    public void setSectionGrades(List<SectionGrade> newSectionGrades) {
+//        this.sectionGrades = newSectionGrades;
+//    }
 }

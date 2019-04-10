@@ -21,7 +21,10 @@ public class Entity {
     @GetMapping("/courses/{id}")
     public String get(@PathVariable Long id, Model model) {
         Optional<Course> courseOptional = this.courseRepository.findById(id);
-        courseOptional.ifPresent(course -> model.addAttribute("course", course));
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            model.addAttribute("course", course);
+        }
 
         return "courses/entity";
     }

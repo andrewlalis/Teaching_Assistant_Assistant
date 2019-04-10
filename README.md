@@ -25,7 +25,7 @@ More specifically, the following data will be stored in this application:
 * Attendance for labs / tutorial sessions
 
 #### Coordination
-By tracking teaching assistants along with the students in a course, managing who does what, and when they do it, is much easier. Using each teaching assistant's availability, attendance records, student or group statistics, the system can plan optimum solutions for balancing workload among a number of teaching assistants.
+By tracking teaching assistants along with the students in a course, managing who does what, and when they do it, is much easier. Using each teaching assistant's availability, attendance records, student or team statistics, the system can plan optimum solutions for balancing workload among a number of teaching assistants.
 
 More specifically, this application will take care of the following tasks:
 

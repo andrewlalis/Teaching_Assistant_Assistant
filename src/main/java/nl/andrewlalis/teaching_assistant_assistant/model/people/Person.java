@@ -1,14 +1,17 @@
 package nl.andrewlalis.teaching_assistant_assistant.model.people;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
-import nl.andrewlalis.teaching_assistant_assistant.model.people.groups.Group;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.Team;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents any person (teaching assistant, student, or other) that exists in this application.
  */
 @Entity
+@Table(name = "people")
 @Inheritance(
         strategy = InheritanceType.JOINED
 )
@@ -23,15 +26,21 @@ public abstract class Person extends BasicEntity {
     @Column
     private String emailAddress;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY
+    /**
+     * The list of teams that this person belongs to.
+     */
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "members"
     )
-    private Group<?> group;
+    private List<Team> teams;
 
     /**
      * Default constructor for JPA.
      */
-    protected Person () {}
+    protected Person () {
+        this.teams = new ArrayList<>();
+    }
 
     /**
      * Constructs a new Person.
@@ -40,9 +49,14 @@ public abstract class Person extends BasicEntity {
      * @param emailAddress The person's email address.
      */
     public Person(String firstName, String lastName, String emailAddress) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+    }
+
+    public void assignToTeam(Team team) {
+        this.teams.add(team);
     }
 
     /*
@@ -61,7 +75,8 @@ public abstract class Person extends BasicEntity {
         return this.emailAddress;
     }
 
-    public Group<?> getGroup() {
-        return this.group;
+    @Override
+    public String toString() {
+        return this.getFirstName() + ' ' + this.getLastName() + '[' + this.getId() + ']';
     }
 }

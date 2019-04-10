@@ -25,7 +25,7 @@ public class DataSourceConfig {
     public DataSource getDataSource() {
         return DataSourceBuilder
                 .create()
-                .url("jdbc:mysql://" + DB_HOST + '/' + DB_NAME)
+                .url("jdbc:h2:~/" + DB_NAME)
                 .username(USERNAME)
                 .password(PASSWORD)
                 .build();

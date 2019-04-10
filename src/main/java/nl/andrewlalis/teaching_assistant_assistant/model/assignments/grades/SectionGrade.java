@@ -1,7 +1,7 @@
 package nl.andrewlalis.teaching_assistant_assistant.model.assignments.grades;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
-import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
 
 import javax.persistence.*;
 
@@ -12,13 +12,13 @@ import javax.persistence.*;
 public class SectionGrade extends BasicEntity {
 
     /**
-     * The teaching assistant responsible for giving this grade.
+     * The teaching assistant team responsible for giving this grade.
      */
     @ManyToOne(
             fetch = FetchType.LAZY,
             optional = false
     )
-    private TeachingAssistant teachingAssistant;
+    private TeachingAssistantTeam teachingAssistantTeam;
 
     /**
      * The overall grade to which this section grade belongs.
@@ -43,11 +43,19 @@ public class SectionGrade extends BasicEntity {
     @Column
     private float grade;
 
-    public SectionGrade(float grade, Feedback feedback, TeachingAssistant teachingAssistant, AssignmentGrade assignmentGrade) {
+    /**
+     * Default constructor for JPA.
+     */
+    protected SectionGrade() {}
+
+    public SectionGrade(float grade, Feedback feedback, TeachingAssistantTeam teachingAssistantTeam, AssignmentGrade assignmentGrade) {
         this.grade = grade;
         this.feedback = feedback;
-        this.teachingAssistant = teachingAssistant;
+        this.teachingAssistantTeam = teachingAssistantTeam;
         this.assignmentGrade = assignmentGrade;
     }
 
+    public float getGrade() {
+        return grade;
+    }
 }

@@ -1,10 +1,11 @@
 package nl.andrewlalis.teaching_assistant_assistant.model;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.assignments.Assignment;
-import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
-import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,42 +30,41 @@ public class Course extends BasicEntity {
     private String code;
 
     /**
-     * The list of students participating in this course. This is a many-to-many relationship because a course can
-     * contain multiple students, and a student can participate in multiple courses at once.
-     */
-    @ManyToMany
-    @JoinTable(
-            name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<Student> students;
-
-    /**
-     * The list of teaching assistants managing this course. Just like for students, this is a many-to-many relation.
-     */
-    @ManyToMany
-    @JoinTable(
-            name = "course_teaching_assistant",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "teaching_assistant_id")
-    )
-    private List<TeachingAssistant> teachingAssistants;
-
-    /**
      * The list of assignments this course contains.
      */
     @OneToMany(
-            fetch = FetchType.LAZY,
-            orphanRemoval = true
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
     )
     @JoinColumn(name = "course_id")
     private List<Assignment> assignments;
 
     /**
+     * The list of student teams in this course.
+     */
+    @OneToMany(
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
+    )
+    private List<StudentTeam> studentTeams;
+
+    /**
+     * The list of teaching assistant teams that belong to this course.
+     */
+    @OneToMany(
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
+    )
+    private List<TeachingAssistantTeam> teachingAssistantTeams;
+
+    /**
      * Default constructor for JPA.
      */
-    protected Course() {}
+    protected Course() {
+        this.assignments = new ArrayList<>();
+        this.studentTeams = new ArrayList<>();
+        this.teachingAssistantTeams = new ArrayList<>();
+    }
 
     /**
      * Constructs a new Course object.
@@ -72,8 +72,17 @@ public class Course extends BasicEntity {
      * @param code The course's unique code.
      */
     public Course(String name, String code) {
+        this(); // Initialize all array lists first.
         this.name = name;
         this.code = code;
+    }
+
+    public void addStudentGroup(StudentTeam group) {
+        this.studentTeams.add(group);
+    }
+
+    public void addTeachingAssistantGroup(TeachingAssistantTeam group) {
+        this.teachingAssistantTeams.add(group);
     }
 
     /*
@@ -88,15 +97,29 @@ public class Course extends BasicEntity {
         return code;
     }
 
-    public List<TeachingAssistant> getTeachingAssistants() {
-        return teachingAssistants;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
     public List<Assignment> getAssignments() {
         return assignments;
+    }
+
+    public List<StudentTeam> getStudentTeams() {
+        return studentTeams;
+    }
+
+    public List<TeachingAssistantTeam> getTeachingAssistantTeams() {
+        return teachingAssistantTeams;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(this.getName()).append('\n');
+        sb.append("TA teams: \n");
+        for (TeachingAssistantTeam team : this.getTeachingAssistantTeams()) {
+            sb.append(team.toString()).append('\n');
+        }
+        sb.append("Student teams: \n");
+        for (StudentTeam team : this.getStudentTeams()) {
+            sb.append(team.toString()).append('\n');
+        }
+        return sb.toString();
     }
 }
