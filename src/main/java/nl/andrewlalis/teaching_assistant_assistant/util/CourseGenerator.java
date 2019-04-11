@@ -5,13 +5,13 @@ import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
-import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
-import nl.andrewlalis.teaching_assistant_assistant.model.repositories.PersonRepository;
-import nl.andrewlalis.teaching_assistant_assistant.model.repositories.TeamRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generator for a full course with TA and student teams, and all other course information.
+ */
 public class CourseGenerator extends TestDataGenerator<Course> {
 
     private static final String[] COURSE_NAMES = {
@@ -35,33 +35,24 @@ public class CourseGenerator extends TestDataGenerator<Course> {
     private int teachingAssistantGroupCount = 10;
     private int teachingAssistantGroupSize = 2;
 
-    private CourseRepository courseRepository;
-    private TeamRepository teamRepository;
-    private PersonRepository personRepository;
-
-    public CourseGenerator(CourseRepository courseRepository, TeamRepository teamRepository, PersonRepository personRepository) {
+    public CourseGenerator() {
         super(0);
-
-        this.courseRepository = courseRepository;
-        this.teamRepository = teamRepository;
-        this.personRepository = personRepository;
     }
 
-    public CourseGenerator(long seed, int studentGroupSize, int teachingAssistantGroupSize, int studentGroupCount, int teachingAssistantGroupCount, CourseRepository courseRepository, TeamRepository teamRepository, PersonRepository personRepository) {
+    public CourseGenerator(long seed, int studentGroupSize, int teachingAssistantGroupSize, int studentGroupCount, int teachingAssistantGroupCount) {
         super(seed);
         this.studentGroupSize = studentGroupSize;
         this.teachingAssistantGroupSize = teachingAssistantGroupSize;
         this.studentGroupCount = studentGroupCount;
         this.teachingAssistantGroupCount = teachingAssistantGroupCount;
-
-        this.courseRepository = courseRepository;
-        this.teamRepository = teamRepository;
-        this.personRepository = personRepository;
     }
 
     @Override
     public Course generate() {
-        Course course = new Course(this.getRandomObjectFromArray(COURSE_NAMES), Integer.toString(this.getRandom().nextInt(1000)));
+        Course course = new Course(
+                this.getRandomObjectFromArray(COURSE_NAMES) + this.getRandomInteger(0, 999),
+                Integer.toString(this.getRandomInteger(0, 1000000))
+        );
         List<StudentTeam> studentTeams = this.generateStudentTeams();
         List<TeachingAssistantTeam> teachingAssistantTeams = this.generateTeachingAssistantTeams();
         for (StudentTeam team : studentTeams) {

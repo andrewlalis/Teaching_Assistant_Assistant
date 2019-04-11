@@ -36,6 +36,10 @@ public abstract class TestDataGenerator<T> {
         return array[this.random.nextInt(array.length)];
     }
 
+    protected int getRandomInteger(int lower, int upper) {
+        return this.random.nextInt(upper + lower) - lower;
+    }
+
     protected Random getRandom() {
         return this.random;
     }
