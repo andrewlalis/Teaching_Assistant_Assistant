@@ -1,4 +1,4 @@
-package nl.andrewlalis.teaching_assistant_assistant.util;
+package nl.andrewlalis.teaching_assistant_assistant.util.sample_data;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;

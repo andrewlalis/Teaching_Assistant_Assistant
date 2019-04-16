@@ -4,7 +4,7 @@ import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.PersonRepository;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.TeamRepository;
-import nl.andrewlalis.teaching_assistant_assistant.util.CourseGenerator;
+import nl.andrewlalis.teaching_assistant_assistant.util.sample_data.CourseGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

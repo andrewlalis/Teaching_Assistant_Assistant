@@ -1,4 +1,4 @@
-package nl.andrewlalis.teaching_assistant_assistant.util;
+package nl.andrewlalis.teaching_assistant_assistant.util.sample_data;
 
 import java.util.ArrayList;
 import java.util.List;
