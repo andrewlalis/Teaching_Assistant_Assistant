@@ -33,7 +33,7 @@ public abstract class Team<P extends Person> extends BasicEntity {
     protected List<P> members;
 
     /**
-     * The course that this team belongs to.
+     * The course that this team belongs to. A team cannot exist on its own, it must belong to a course.
      */
     @ManyToOne(
             optional = false
