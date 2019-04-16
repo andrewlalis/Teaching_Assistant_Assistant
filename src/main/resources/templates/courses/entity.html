@@ -7,10 +7,8 @@
 <body>
 
 <div id="content">
-    <h1 th:text="${course.getName()}"></h1>
-    <h2 th:text="${course.getCode()}"></h2>
+    <h1><span th:text="${course.getName()}"></span> (Code: <span th:text="${course.getCode()}"></span>)</h1>
     <h2>Created on: <span th:text="${course.getCreatedOn()}"></span></h2>
-    <h2>Id: <span th:text="${course.getId()}"></span></h2>
     <hr>
     <h3>Teaching Assistant Groups (<span th:text="${course.getTeachingAssistantTeams().size()}"></span>):</h3>
     <table>
@@ -29,7 +27,12 @@
 </div>
 
 <div id="sidebar">
-
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/import_students(code=${course.getCode()})}">Import students from CSV</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/import_teaching_assistants(code=${course.getCode()})}">Import teaching assistants from CSV</a>
+    </div>
 </div>
 
 </body>
