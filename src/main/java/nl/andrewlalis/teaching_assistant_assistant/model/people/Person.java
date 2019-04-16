@@ -74,6 +74,10 @@ public abstract class Person extends BasicEntity {
         return this.lastName;
     }
 
+    public String getFullName() {
+        return this.getFirstName() + ' ' + this.getLastName();
+    }
+
     public String getEmailAddress() {
         return this.emailAddress;
     }

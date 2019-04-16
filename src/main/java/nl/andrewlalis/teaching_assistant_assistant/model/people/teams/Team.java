@@ -75,6 +75,10 @@ public abstract class Team<P extends Person> extends BasicEntity {
         this.course = course;
     }
 
+    /**
+     * Gets a list of all members of this team.
+     * @return A list of all the members in this team.
+     */
     public List<P> getMembers() {
         return this.members;
     }
