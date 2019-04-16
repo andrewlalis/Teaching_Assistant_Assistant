@@ -20,20 +20,30 @@ public class Courses {
         this.courseRepository = courseRepository;
     }
 
+    /**
+     * Handles requests to get the list of courses.
+     * @param model The view model to populate with data for the template.
+     * @return The name of the template that will be used with the given model to build the view.
+     */
     @GetMapping("/courses")
     public String get(Model model) {
         model.addAttribute("courses", courseRepository.findAll());
         return "courses";
     }
 
+    /**
+     * Handles POST requests to this collection of courses. This facilitates the creation of new courses.
+     * @param course The course which has been submitted by a user.
+     * @return The entity view for the course which has just been created.
+     */
     @PostMapping(
             value = "/courses",
-            consumes = "application/json"
+            consumes = "application/x-www-form-urlencoded"
     )
     public String post(@ModelAttribute Course course) {
         System.out.println("Object submitted: " + course);
         this.courseRepository.save(course);
-        return "/courses/created";
+        return "courses/entity";
     }
 
 }

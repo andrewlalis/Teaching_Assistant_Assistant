@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create a Course</title>
 </head>
 <body>
+
+<div id="content">
+    <p>
+        Create your course here
+    </p>
+    <form action="#" th:action="@{/courses}" th:object="${course}" method="post">
+        <label for="course_name_input">Name:</label>
+        <input id="course_name_input" type="text" th:field="*{name}"/>
+        <label for="course_code_input">Code:</label>
+        <input id="course_code_input" type="text" th:field="*{code}"/>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        block
+    </div>
+</div>
 
 </body>
 </html>

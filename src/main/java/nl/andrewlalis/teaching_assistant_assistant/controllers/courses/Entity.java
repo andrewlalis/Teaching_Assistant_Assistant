@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
+/**
+ * Controller for the course entity, that is, one individual course.
+ */
 @Controller
 public class Entity {
 
@@ -18,9 +21,16 @@ public class Entity {
         this.courseRepository = courseRepository;
     }
 
-    @GetMapping("/courses/{id}")
-    public String get(@PathVariable Long id, Model model) {
-        Optional<Course> courseOptional = this.courseRepository.findById(id);
+    /**
+     * Handles get requests to a course with a given code.
+     * @param code The unique course code used to identify a course entity.
+     * @param model The view model that will be populated with data.
+     * @return The template which will be used in conjunction with the model to build a view.
+     */
+    @GetMapping("/courses/{code}")
+    public String get(@PathVariable String code, Model model) {
+        Optional<Course> courseOptional = this.courseRepository.findByCode(code);
+
         if (courseOptional.isPresent()) {
             Course course = courseOptional.get();
             model.addAttribute("course", course);

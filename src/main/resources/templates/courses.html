@@ -14,7 +14,7 @@
         </tr>
         <tr th:each="course: ${courses}">
             <td>
-                <a th:href="@{/courses/{id}(id=${course.getId()})}"  th:text="${course.getName()}"></a>
+                <a th:href="@{/courses/{code}(code=${course.getCode()})}"  th:text="${course.getName()}"></a>
             </td>
             <td th:text="${course.getCode()}"></td>
             <td th:text="${course.getCreatedOn()}"></td>
@@ -24,7 +24,7 @@
 
 <div id="sidebar">
     <div class="sidebar_block">
-        Create new course
+        <a href="/courses/create">Create new course</a>
     </div>
     <div class="sidebar_block">
         Do something else
