@@ -27,7 +27,10 @@ public abstract class Person extends BasicEntity {
     private String emailAddress;
 
     /**
-     * The list of teams that this person belongs to.
+     * The list of teams that this person belongs to. Because a person can belong to more than one team, it is implied
+     * that each person exists in only one location in the database. Therefore, if one person is enrolled in two courses
+     * both of which use this application, only one instance of that person will exist, and will simply be related to
+     * two teams.
      */
     @ManyToMany(
             fetch = FetchType.LAZY,
