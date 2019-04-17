@@ -77,12 +77,12 @@ public class Course extends BasicEntity {
         this.code = code;
     }
 
-    public void addStudentGroup(StudentTeam group) {
-        this.studentTeams.add(group);
+    public void addStudentTeam(StudentTeam team) {
+        this.studentTeams.add(team);
     }
 
-    public void addTeachingAssistantGroup(TeachingAssistantTeam group) {
-        this.teachingAssistantTeams.add(group);
+    public void addTeachingAssistantTeam(TeachingAssistantTeam team) {
+        this.teachingAssistantTeams.add(team);
     }
 
     /*

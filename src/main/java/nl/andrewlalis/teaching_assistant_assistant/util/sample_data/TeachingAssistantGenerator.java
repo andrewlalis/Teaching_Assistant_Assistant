@@ -12,6 +12,6 @@ public class TeachingAssistantGenerator extends PersonGenerator<TeachingAssistan
     public TeachingAssistant generate() {
         String firstName = this.getRandomFirstName();
         String lastName = this.getRandomLastName();
-        return new TeachingAssistant(firstName, lastName, this.getRandomEmailAddress(firstName, lastName));
+        return new TeachingAssistant(firstName, lastName, null, this.getRandomEmailAddress(firstName, lastName));
     }
 }

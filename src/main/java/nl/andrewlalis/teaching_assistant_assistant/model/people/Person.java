@@ -26,6 +26,9 @@ public abstract class Person extends BasicEntity {
     @Column
     private String emailAddress;
 
+    @Column
+    private String githubUsername;
+
     /**
      * The list of teams that this person belongs to. Because a person can belong to more than one team, it is implied
      * that each person exists in only one location in the database. Therefore, if one person is enrolled in two courses
@@ -50,12 +53,14 @@ public abstract class Person extends BasicEntity {
      * @param firstName The person's first name.
      * @param lastName The person's last name.
      * @param emailAddress The person's email address.
+     * @param githubUsername The person's github username;
      */
-    public Person(String firstName, String lastName, String emailAddress) {
+    public Person(String firstName, String lastName, String emailAddress, String githubUsername) {
         this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+        this.githubUsername = githubUsername;
     }
 
     public void assignToTeam(Team team) {
@@ -82,8 +87,40 @@ public abstract class Person extends BasicEntity {
         return this.emailAddress;
     }
 
+    public String getGithubUsername() {
+        return this.githubUsername;
+    }
+
+    /**
+     * Determines if two Persons are equal. They are considered equal when all of the basic identifying information
+     * about the person is the same, regardless of case.
+     * @param o The other object.
+     * @return True if the other object is the same person, or false if not.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (o instanceof Person) {
+            Person p = (Person) o;
+            return (
+                    this.getFirstName().equalsIgnoreCase(p.getFirstName())
+                    && this.getLastName().equalsIgnoreCase(p.getLastName())
+                    && this.getEmailAddress().equalsIgnoreCase(p.getEmailAddress())
+                    && this.getGithubUsername().equalsIgnoreCase(p.getGithubUsername())
+            );
+        }
+
+        return false;
+    }
+
     @Override
     public String toString() {
-        return this.getFirstName() + ' ' + this.getLastName() + '[' + this.getId() + ']';
+        return "First Name: " + this.getFirstName()
+                + ", Last Name: " + this.getLastName()
+                + ", Email: " + this.getEmailAddress()
+                + ", Github Username: " + this.getGithubUsername();
     }
 }

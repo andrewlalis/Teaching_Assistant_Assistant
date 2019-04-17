@@ -41,7 +41,6 @@ public class Courses {
             consumes = "application/x-www-form-urlencoded"
     )
     public String post(@ModelAttribute Course course) {
-        System.out.println("Object submitted: " + course);
         this.courseRepository.save(course);
         return "courses/entity";
     }

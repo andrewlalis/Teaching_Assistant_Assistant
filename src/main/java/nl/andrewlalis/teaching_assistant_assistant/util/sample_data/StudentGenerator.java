@@ -12,6 +12,6 @@ public class StudentGenerator extends PersonGenerator<Student> {
     public Student generate() {
         String firstName = this.getRandomFirstName();
         String lastName = this.getRandomLastName();
-        return new Student(firstName, lastName, this.getRandomEmailAddress(firstName, lastName));
+        return new Student(firstName, lastName, this.getRandomEmailAddress(firstName, lastName), null, this.getRandomInteger(0, 100000000));
     }
 }

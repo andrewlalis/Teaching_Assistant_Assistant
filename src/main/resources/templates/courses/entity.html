@@ -48,7 +48,7 @@
         <a th:href="@{/courses/{code}/import_students(code=${course.getCode()})}">Import students from CSV</a>
     </div>
     <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/import_teaching_assistants(code=${course.getCode()})}">Import teaching assistants from CSV</a>
+        <a th:disabled="true" th:href="@{/courses/{code}/import_teaching_assistants(code=${course.getCode()})}">Import teaching assistants from CSV</a>
     </div>
 </div>
 
