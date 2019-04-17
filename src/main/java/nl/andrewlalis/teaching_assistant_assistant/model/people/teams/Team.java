@@ -91,7 +91,7 @@ public abstract class Team<P extends Person> extends BasicEntity {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (P p : this.getMembers()) {
-            sb.append(p.toString()).append(", ");
+            sb.append(p.getFullName()).append(", ");
         }
         return sb.toString();
     }
