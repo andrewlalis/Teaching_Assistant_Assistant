@@ -1,6 +1,7 @@
 package nl.andrewlalis.teaching_assistant_assistant.model.people;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
+import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.Team;
 
 import javax.persistence.*;
@@ -42,10 +43,20 @@ public abstract class Person extends BasicEntity {
     private List<Team> teams;
 
     /**
+     * The list of courses that this person belongs to.
+     */
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "participants"
+    )
+    private List<Course> courses;
+
+    /**
      * Default constructor for JPA.
      */
     protected Person () {
         this.teams = new ArrayList<>();
+        this.courses = new ArrayList<>();
     }
 
     /**
@@ -64,7 +75,15 @@ public abstract class Person extends BasicEntity {
     }
 
     public void assignToTeam(Team team) {
-        this.teams.add(team);
+        if (!this.teams.contains(team)) {
+            this.teams.add(team);
+        }
+    }
+
+    public void assignToCourse(Course course) {
+        if (!this.courses.contains(course)) {
+            this.courses.add(course);
+        }
     }
 
     /*
@@ -89,6 +108,10 @@ public abstract class Person extends BasicEntity {
 
     public String getGithubUsername() {
         return this.githubUsername;
+    }
+
+    public List<Course> getCourses() {
+        return this.courses;
     }
 
     /**

@@ -1,6 +1,8 @@
 package nl.andrewlalis.teaching_assistant_assistant.model;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.assignments.Assignment;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.Person;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
 
@@ -58,12 +60,26 @@ public class Course extends BasicEntity {
     private List<TeachingAssistantTeam> teachingAssistantTeams;
 
     /**
+     * The list of all participants in this course, both teaching assistants and students.
+     */
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "course_participants",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private List<Person> participants;
+
+    /**
      * Default constructor for JPA.
      */
     protected Course() {
         this.assignments = new ArrayList<>();
         this.studentTeams = new ArrayList<>();
         this.teachingAssistantTeams = new ArrayList<>();
+        this.participants = new ArrayList<>();
     }
 
     /**
@@ -83,6 +99,12 @@ public class Course extends BasicEntity {
 
     public void addTeachingAssistantTeam(TeachingAssistantTeam team) {
         this.teachingAssistantTeams.add(team);
+    }
+
+    public void addParticipant(Person person) {
+        if (!this.participants.contains(person)) {
+            this.participants.add(person);
+        }
     }
 
     /*
@@ -107,6 +129,16 @@ public class Course extends BasicEntity {
 
     public List<TeachingAssistantTeam> getTeachingAssistantTeams() {
         return teachingAssistantTeams;
+    }
+
+    public List<Student> getStudents() {
+        List<Student> students = new ArrayList<>();
+        this.participants.forEach(participant -> {
+            if (participant instanceof Student) {
+                students.add((Student) participant);
+            }
+        });
+        return students;
     }
 
     @Override

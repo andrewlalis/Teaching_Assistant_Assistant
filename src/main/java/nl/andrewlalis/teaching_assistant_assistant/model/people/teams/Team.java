@@ -17,7 +17,7 @@ import java.util.List;
 @Inheritance(
         strategy = InheritanceType.JOINED
 )
-public abstract class Team<P extends Person> extends BasicEntity {
+public abstract class Team extends BasicEntity {
 
     /**
      * The list of members in this group.
@@ -30,7 +30,7 @@ public abstract class Team<P extends Person> extends BasicEntity {
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
-    protected List<P> members;
+    protected List<Person> members;
 
     /**
      * The course that this team belongs to. A team cannot exist on its own, it must belong to a course.
@@ -47,23 +47,23 @@ public abstract class Team<P extends Person> extends BasicEntity {
         this.members = new ArrayList<>();
     }
 
-    public void addMember(P person) {
+    public void addMember(Person person) {
         if (!this.containsMember(person)) {
             this.members.add(person);
         }
     }
 
-    public void addMembers(List<P> people) {
-        for (P person : people) {
+    public void addMembers(List<Person> people) {
+        for (Person person : people) {
             this.addMember(person);
         }
     }
 
-    public boolean containsMember(P person) {
+    public boolean containsMember(Person person) {
         return this.members.contains(person);
     }
 
-    public void removeMember(P person) {
+    public void removeMember(Person person) {
         this.members.remove(person);
     }
 
@@ -79,7 +79,7 @@ public abstract class Team<P extends Person> extends BasicEntity {
      * Gets a list of all members of this team.
      * @return A list of all the members in this team.
      */
-    public List<P> getMembers() {
+    public List<Person> getMembers() {
         return this.members;
     }
 
@@ -90,7 +90,7 @@ public abstract class Team<P extends Person> extends BasicEntity {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (P p : this.getMembers()) {
+        for (Person p : this.getMembers()) {
             sb.append(p.getFullName()).append(", ");
         }
         return sb.toString();

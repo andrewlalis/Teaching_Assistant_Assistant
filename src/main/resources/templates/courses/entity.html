@@ -41,6 +41,22 @@
             </td>
         </tr>
     </table>
+
+    <h3>All Students (<span th:text="${course.getStudents().size()}"></span>):</h3>
+    <table>
+        <tr th:each="student: ${course.getStudents()}">
+            <td>
+                <a
+                    th:href="@{/students/{student_id}
+                    (student_id=${student.getId()})}">
+                    Student <span th:text="${student.getId()}"></span>
+                </a>
+            </td>
+            <td th:text="${student.getFullName()}"></td>
+            <td th:text="${student.getStudentNumber()}"></td>
+            <td th:text="${student.getEmailAddress()}"></td>
+        </tr>
+    </table>
 </div>
 
 <div id="sidebar">

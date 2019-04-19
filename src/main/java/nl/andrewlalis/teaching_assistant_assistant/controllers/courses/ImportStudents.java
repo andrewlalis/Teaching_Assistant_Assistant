@@ -3,7 +3,8 @@ package nl.andrewlalis.teaching_assistant_assistant.controllers.courses;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
-import nl.andrewlalis.teaching_assistant_assistant.model.repositories.TeamRepository;
+import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentRepository;
+import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentTeamRepository;
 import nl.andrewlalis.teaching_assistant_assistant.util.team_importing.StudentTeamImporter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +26,14 @@ public class ImportStudents {
 
     private CourseRepository courseRepository;
 
-    private TeamRepository teamRepository;
+    private StudentTeamRepository studentTeamRepository;
 
-    protected ImportStudents(CourseRepository courseRepository, TeamRepository teamRepository) {
+    private StudentRepository studentRepository;
+
+    protected ImportStudents(CourseRepository courseRepository, StudentTeamRepository studentTeamRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
-        this.teamRepository = teamRepository;
+        this.studentTeamRepository = studentTeamRepository;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping("/courses/{code}/import_students")
@@ -50,8 +54,33 @@ public class ImportStudents {
             return "redirect:/courses";
         }
 
+        Course course = optionalCourse.get();
+
         try {
             List<StudentTeam> studentTeams = StudentTeamImporter.importFromCSV(file.getInputStream(), optionalCourse.get());
+
+            // Save all the new students first, then save all the teams they belong to.
+            for (StudentTeam team : studentTeams) {
+                team.getMembers().forEach(student -> student.assignToCourse(course));
+                this.studentRepository.saveAll(team.getStudents());
+                team.setCourse(course);
+            }
+
+            studentTeams.forEach(team -> {
+                team.getMembers().forEach(student -> {
+                    student.assignToCourse(course);
+                    course.addParticipant(student);
+                });
+                team.setCourse(course);
+                course.addStudentTeam(team);
+
+                //this.studentRepository.saveAll((team.getMembers()));
+            });
+
+            //this.studentTeamRepository.saveAll(studentTeams);
+
+            this.courseRepository.save(course);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
