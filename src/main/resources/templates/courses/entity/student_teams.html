@@ -13,6 +13,12 @@
         <p>No student teams.</p>
     </div>
     <table>
+        <tr>
+            <th>Team</th>
+            <th>Students</th>
+            <th>Repository Name</th>
+            <th>Assigned TA Team</th>
+        </tr>
         <tr th:each="studentTeam: ${course.getStudentTeams()}">
             <td>
                 <a
@@ -21,10 +27,20 @@
                     Student Team <span th:text="${studentTeam.getId()}"></span>
                 </a>
             </td>
-            <td th:each="student: ${studentTeam.getStudents()}">
-                <span th:text="${student.getFullName()}"></span>
+            <td>
+                <div th:each="student: ${studentTeam.getStudents()}">
+                    <a th:href="@{/students/{id}(id=${student.getId()})}" th:text="${student.getFullName()}"></a><br>
+                </div>
             </td>
             <td th:text="${studentTeam.getGithubRepositoryName()}"></td>
+            <td>
+                <a
+                        th:if="${studentTeam.getAssignedTeachingAssistantTeam() != null}"
+                        th:href="@{/courses/{code}/teaching_assistant_teams/{teamId}
+                        (code=${course.getCode()}, teamId=${studentTeam.getAssignedTeachingAssistantTeam().getId()})}"
+                        th:text="${studentTeam.getAssignedTeachingAssistantTeam().getId()}"
+                ></a>
+            </td>
         </tr>
     </table>
 </div>

@@ -35,3 +35,8 @@ body {
 .sidebar_block a:hover {
     color: lightgreen;
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
