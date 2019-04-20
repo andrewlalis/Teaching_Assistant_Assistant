@@ -39,6 +39,12 @@ public class Course extends BasicEntity {
     private String githubOrganizationName;
 
     /**
+     * The API key that will be used for Github interaction with this organization.
+     */
+    @Column
+    private String apiKey;
+
+    /**
      * The list of assignments this course contains.
      */
     @OneToMany(
@@ -140,6 +146,14 @@ public class Course extends BasicEntity {
 
     public void setGithubOrganizationName(String name) {
         this.githubOrganizationName = name;
+    }
+
+    public String getApiKey() {
+        return this.apiKey;
+    }
+
+    public void setApiKey(String key) {
+        this.apiKey = key;
     }
 
     public List<Assignment> getAssignments() {

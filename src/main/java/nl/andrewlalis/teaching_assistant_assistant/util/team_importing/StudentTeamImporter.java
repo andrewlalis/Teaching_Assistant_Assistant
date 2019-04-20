@@ -36,17 +36,7 @@ public class StudentTeamImporter {
 
         List<StudentRecordEntry> studentEntries = extractStudentsFromRecords(records);
 
-        System.out.println("<<< Entries (" + studentEntries.size() + ") >>>");
-        for (StudentRecordEntry entry : studentEntries) {
-            System.out.println(entry.toString());
-        }
-
         List<StudentTeam> studentTeams = generateTeamsFromStudentEntries(studentEntries, 0);
-
-        System.out.println("<<< Teams (" + studentTeams.size() + ") >>>");
-        for (StudentTeam team : studentTeams) {
-            System.out.println("Team: " + team);
-        }
 
         return studentTeams;
     }

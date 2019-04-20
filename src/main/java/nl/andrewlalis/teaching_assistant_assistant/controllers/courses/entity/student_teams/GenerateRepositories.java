@@ -39,7 +39,7 @@ public class GenerateRepositories {
         optionalCourse.ifPresent(course -> {
             course.setGithubOrganizationName("InitializerTesting");
             try {
-                GithubManager manager = new GithubManager("andrewlalis", "scrubstub43");
+                GithubManager manager = new GithubManager(course.getApiKey());
                 manager.generateStudentTeamRepository(course.getStudentTeams().get(0));
             } catch (IOException e) {
                 e.printStackTrace();

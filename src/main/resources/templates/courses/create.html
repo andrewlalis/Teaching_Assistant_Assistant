@@ -11,11 +11,17 @@
     </p>
     <form action="#" th:action="@{/courses}" th:object="${course}" method="post">
         <label for="course_name_input">Name:</label>
-        <input id="course_name_input" type="text" th:field="*{name}"/>
+        <input id="course_name_input" type="text" th:field="*{name}" required/>
+
         <label for="course_code_input">Code:</label>
-        <input id="course_code_input" type="text" th:field="*{code}"/>
+        <input id="course_code_input" type="text" th:field="*{code}" required/>
+
         <label for="course_github_organization_name_input">Github Organization:</label>
-        <input id="course_github_organization_name_input" type="text" th:field="*{githubOrganizationName}"/>
+        <input id="course_github_organization_name_input" type="text" th:field="*{githubOrganizationName}" required/>
+
+        <label for="course_github_api_key_input">Github API Key:</label>
+        <input id="course_github_api_key_input" type="text" th:field="*{apiKey}" required/>
+
         <button type="submit">Submit</button>
     </form>
 </div>
