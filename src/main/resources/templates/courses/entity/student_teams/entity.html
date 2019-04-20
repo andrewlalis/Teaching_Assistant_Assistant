@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Team</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Student Team <span th:text="${student_team.getId()}"></span></h1>
+
+    <ul>
+        <li>
+            Github Repository:
+            <a th:href="@{${'https://www.github.com/' + student_team.getCourse().getGithubOrganizationName() + '/' + student_team.getGithubRepositoryName()}}">
+                <span th:text="${student_team.getGithubRepositoryName()}"></span>
+            </a>
+        </li>
+        <li>
+            Members:
+            <ul>
+                <li th:each="student: ${student_team.getStudents()}">
+                    <a th:href="@{/students/{id}(id=${student.getId()})}">
+                        <span th:text="${student.getFullName()}"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

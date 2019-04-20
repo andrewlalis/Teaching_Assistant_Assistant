@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Students in <span th:text="${course.getName()}"></span></h1>
+
+    <table>
+        <tr th:each="student: ${course.getStudents()}">
+            <td>
+                <a th:href="@{/students/{id}(id=${student.getId()})}"><span th:text="${student.getFullName()}"></span></a>
+            </td>
+            <td th:text="${student.getStudentNumber()}"></td>
+            <td th:text="${student.getEmailAddress()}"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

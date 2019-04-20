@@ -32,6 +32,12 @@ public class Course extends BasicEntity {
     private String code;
 
     /**
+     * The github organization name for this course, if any.
+     */
+    @Column
+    private String githubOrganizationName;
+
+    /**
      * The list of assignments this course contains.
      */
     @OneToMany(
@@ -117,6 +123,14 @@ public class Course extends BasicEntity {
 
     public String getCode() {
         return code;
+    }
+
+    public String getGithubOrganizationName() {
+        return this.githubOrganizationName;
+    }
+
+    public void setGithubOrganizationName(String name) {
+        this.githubOrganizationName = name;
     }
 
     public List<Assignment> getAssignments() {

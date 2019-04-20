@@ -10,53 +10,20 @@
     <h1><span th:text="${course.getName()}"></span> (Code: <span th:text="${course.getCode()}"></span>)</h1>
     <hr>
 
-    <h3>Teaching Assistant Groups (<span th:text="${course.getTeachingAssistantTeams().size()}"></span>):</h3>
-    <table>
-        <tr th:each="teachingAssistantTeam: ${course.getTeachingAssistantTeams()}">
-            <td>
-                <a
-                    th:href="@{/courses/{code}/ta_teams/{team_id}
-                    (code=${course.getCode()}, team_id=${teachingAssistantTeam.getId()})}">
-                    TA Team <span th:text="${teachingAssistantTeam.getId()}"></span>
-                </a>
-            </td>
-            <td th:each="teachingAssistant: ${teachingAssistantTeam.getMembers()}">
-                <span th:text="${teachingAssistant.getFullName()}"></span>
-            </td>
-        </tr>
-    </table>
-
-    <h3>Student Groups (<span th:text="${course.getStudentTeams().size()}"></span>):</h3>
-    <table>
-        <tr th:each="studentTeam: ${course.getStudentTeams()}">
-            <td>
-                <a
-                    th:href="@{/courses/{code}/student_teams/{team_id}
-                    (code=${course.getCode()}, team_id=${studentTeam.getId()})}">
-                    Student Team <span th:text="${studentTeam.getId()}"></span>
-                </a>
-            </td>
-            <td th:each="student: ${studentTeam.getMembers()}">
-                <span th:text="${student.getFullName()}"></span>
-            </td>
-        </tr>
-    </table>
-
-    <h3>All Students (<span th:text="${course.getStudents().size()}"></span>):</h3>
-    <table>
-        <tr th:each="student: ${course.getStudents()}">
-            <td>
-                <a
-                    th:href="@{/students/{student_id}
-                    (student_id=${student.getId()})}">
-                    Student <span th:text="${student.getId()}"></span>
-                </a>
-            </td>
-            <td th:text="${student.getFullName()}"></td>
-            <td th:text="${student.getStudentNumber()}"></td>
-            <td th:text="${student.getEmailAddress()}"></td>
-        </tr>
-    </table>
+    <ul>
+        <li>
+            <a th:href="@{${'https://www.github.com/' + course.getGithubOrganizationName()}}">Github Organization</a>
+        </li>
+        <li>
+            <a th:href="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}">Teaching Assistant Teams</a>
+        </li>
+        <li>
+            <a th:href="@{/courses/{code}/student_teams(code=${course.getCode()})}">Student Teams</a>
+        </li>
+        <li>
+            <a th:href="@{/courses/{code}/students(code=${course.getCode()})}">All Students</a>
+        </li>
+    </ul>
 </div>
 
 <div id="sidebar">

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Teams</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Student Teams for <span th:text="${course.getName()}"></span></h1>
+
+    <div th:if="${course.getStudentTeams().isEmpty()}">
+        <p>No student teams.</p>
+    </div>
+    <table>
+        <tr th:each="studentTeam: ${course.getStudentTeams()}">
+            <td>
+                <a
+                        th:href="@{/courses/{code}/student_teams/{team_id}
+                    (code=${course.getCode()}, team_id=${studentTeam.getId()})}">
+                    Student Team <span th:text="${studentTeam.getId()}"></span>
+                </a>
+            </td>
+            <td th:each="student: ${studentTeam.getStudents()}">
+                <span th:text="${student.getFullName()}"></span>
+            </td>
+            <td th:text="${studentTeam.getGithubRepositoryName()}"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}">Generate Repositories</a>
+    </div>
+</div>
+
+</body>
+</html>

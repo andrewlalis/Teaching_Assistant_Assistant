@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <title>Student</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Student: <span th:text="${student.getFullName()}"></span></h1>
+
+    <ul>
+        <li>
+            Student Number: <code th:text="${student.getStudentNumber()}"></code>
+        </li>
+        <li>
+            Email: <code th:text="${student.getEmailAddress()}"></code>
+        </li>
+        <li>
+            Github Username: <code th:text="${student.getGithubUsername()}"></code>
+        </li>
+        <li>
+            Courses:
+            <ul>
+                <li th:each="course: ${student.getCourses()}">
+                    <a th:href="@{/courses/{code}(code=${course.getCode()})}"><span th:text="${course.getName()}"></span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

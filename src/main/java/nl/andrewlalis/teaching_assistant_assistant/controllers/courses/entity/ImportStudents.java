@@ -1,4 +1,4 @@
-package nl.andrewlalis.teaching_assistant_assistant.controllers.courses;
+package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
@@ -40,7 +40,7 @@ public class ImportStudents {
     public String get(@PathVariable String code, Model model) {
         Optional<Course> optionalCourse = this.courseRepository.findByCode(code);
         optionalCourse.ifPresent(course -> model.addAttribute("course", course));
-        return "courses/import_students";
+        return "courses/entity/import_students";
     }
 
     @PostMapping(
@@ -74,10 +74,10 @@ public class ImportStudents {
                 team.setCourse(course);
                 course.addStudentTeam(team);
 
-                //this.studentRepository.saveAll((team.getMembers()));
+                this.studentRepository.saveAll(team.getStudents());
             });
 
-            //this.studentTeamRepository.saveAll(studentTeams);
+            this.studentTeamRepository.saveAll(studentTeams);
 
             this.courseRepository.save(course);
 

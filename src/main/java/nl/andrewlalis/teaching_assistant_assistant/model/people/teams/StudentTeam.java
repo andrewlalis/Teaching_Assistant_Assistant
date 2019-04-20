@@ -4,6 +4,7 @@ import nl.andrewlalis.teaching_assistant_assistant.model.assignments.grades.Assi
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Person;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -15,6 +16,12 @@ import java.util.List;
  */
 @Entity
 public class StudentTeam extends Team {
+
+    /**
+     * The name of the github repository that belongs to this team.
+     */
+    @Column
+    private String githubRepositoryName;
 
     /**
      * The list of assignment grades which this student group has received.
@@ -36,6 +43,14 @@ public class StudentTeam extends Team {
             students.add((Student) person);
         });
         return students;
+    }
+
+    public String getGithubRepositoryName() {
+        return this.githubRepositoryName;
+    }
+
+    public void setGithubRepositoryName(String name) {
+        this.githubRepositoryName = name;
     }
 
 }
