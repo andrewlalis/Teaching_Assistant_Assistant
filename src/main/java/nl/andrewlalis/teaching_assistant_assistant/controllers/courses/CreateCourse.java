@@ -7,11 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class Create {
+public class CreateCourse {
 
     private CourseRepository courseRepository;
 
-    protected Create(CourseRepository courseRepository) {
+    protected CreateCourse(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
 

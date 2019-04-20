@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <title>Create Teaching Assistant Team</title>
+</head>
+<body>
+
+<div id="content">
+    <p>
+        Create your course here
+    </p>
+    <form action="#" th:action="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}" enctype="application/x-www-form-urlencoded" method="post">
+        <label for="ta_team_github_team_name">Github team name:</label>
+        <input id="ta_team_github_team_name" type="text" name="github_team_name"/>
+
+        <label for="ta_team_member_1">Select the first Team Member:</label>
+        <select id="ta_team_member_1" name="id_1">
+            <option th:each="ta: ${course.getTeachingAssistants()}" th:value="${ta.getId()}" th:text="${ta.getFullName()}"></option>
+        </select>
+
+        <label for="ta_team_member_2">Select the first Team Member:</label>
+        <select id="ta_team_member_2" name="id_2">
+            <option th:each="ta: ${course.getTeachingAssistants()}" th:value="${ta.getId()}" th:text="${ta.getFullName()}"></option>
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        block
+    </div>
+</div>
+
+</body>
+</html>

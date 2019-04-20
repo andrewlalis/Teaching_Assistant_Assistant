@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Encapsulates much of the github functionality that is needed.
+ */
 public class GithubManager {
 
     private GitHub github;

@@ -114,6 +114,10 @@ public abstract class Person extends BasicEntity {
         return this.courses;
     }
 
+    public List<Team> getTeams() {
+        return this.teams;
+    }
+
     /**
      * Determines if two Persons are equal. They are considered equal when all of the basic identifying information
      * about the person is the same, regardless of case.

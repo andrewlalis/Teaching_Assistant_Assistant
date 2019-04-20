@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <title>Teaching Assistant Team</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Teaching Assistant Team <span th:text="${teachingAssistantTeam.getId()}"></span> for <span th:text="${course.getName()}"></span></h1>
+
+    <ul>
+        <li>
+            Github Team Name: <code th:text="${teachingAssistantTeam.getGithubTeamName()}"></code>
+        </li>
+        <li>
+            Teaching Assistants:
+            <ul>
+                <li th:each="teachingAssistant: ${teachingAssistantTeam.getTeachingAssistants()}">
+                    <a th:href="@{/teaching_assistants/{id}(id=${teachingAssistant.getId()})}">
+                        <span th:text="${teachingAssistant.getFullName()}"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

@@ -25,12 +25,20 @@
                 <span th:text="${ta.getFullName()}"></span>
             </td>
             <td th:text="${taTeam.getGithubTeamName()}"></td>
+            <td>
+                <a th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}/delete
+                    (code=${course.getCode()}, team_id=${taTeam.getId()})}">
+                    Delete
+                </a>
+            </td>
         </tr>
     </table>
 </div>
 
 <div id="sidebar">
-
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/teaching_assistant_teams/create(code=${course.getCode()})}">Create Teaching Assistant Team</a>
+    </div>
 </div>
 
 </body>

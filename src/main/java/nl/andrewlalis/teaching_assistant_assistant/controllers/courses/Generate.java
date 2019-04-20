@@ -26,7 +26,7 @@ public class Generate {
         this.courseRepository.saveAll(courses);
 
         model.addAttribute("courses", courseRepository.findAll());
-        return "courses";
+        return "redirect:/courses";
     }
 
 }
