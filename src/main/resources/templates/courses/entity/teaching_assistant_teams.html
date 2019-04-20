@@ -21,10 +21,10 @@
                     Teaching Assistant Team <span th:text="${taTeam.getId()}"></span>
                 </a>
             </td>
-            <td th:each="ta: ${taTeam.getStudents()}">
+            <td th:each="ta: ${taTeam.getTeachingAssistants()}">
                 <span th:text="${ta.getFullName()}"></span>
             </td>
-            <td th:text="${taTeam.getGithubRepositoryName()}"></td>
+            <td th:text="${taTeam.getGithubTeamName()}"></td>
         </tr>
     </table>
 </div>
