@@ -29,7 +29,8 @@ public class CourseEntity {
      */
     @GetMapping("/courses/{code}")
     public String get(@PathVariable String code, Model model) {
-        this.addCourseToModelIfExists(code, model);
+        Optional<Course> courseOptional = this.courseRepository.findByCode(code);
+        courseOptional.ifPresent(course -> model.addAttribute("course", course));
         return "courses/entity";
     }
 
@@ -41,8 +42,22 @@ public class CourseEntity {
      */
     @GetMapping("/courses/{code}/student_teams")
     public String getStudentTeams(@PathVariable String code, Model model) {
-        this.addCourseToModelIfExists(code, model);
+        Optional<Course> courseOptional = this.courseRepository.findByCode(code);
+        courseOptional.ifPresent(course -> model.addAttribute("course", course));
         return "courses/entity/student_teams";
+    }
+
+    /**
+     * Gets the teaching assistant teams for a particular course.
+     * @param code The course code.
+     * @param model The view model.
+     * @return The template for viewing the list of student teams.
+     */
+    @GetMapping("/courses/{code}/teaching_assistant_teams")
+    public String getTeachingAssistantTeams(@PathVariable String code, Model model) {
+        Optional<Course> courseOptional = this.courseRepository.findByCode(code);
+        courseOptional.ifPresent(course -> model.addAttribute("course", course));
+        return "courses/entity/teaching_assistant_teams";
     }
 
     /**
@@ -53,18 +68,22 @@ public class CourseEntity {
      */
     @GetMapping("/courses/{code}/students")
     public String getStudents(@PathVariable String code, Model model) {
-        this.addCourseToModelIfExists(code, model);
+        Optional<Course> courseOptional = this.courseRepository.findByCode(code);
+        courseOptional.ifPresent(course -> model.addAttribute("course", course));
         return "courses/entity/students";
     }
 
     /**
-     * Adds the course found by a certain code to the list of model attributes.
-     * @param courseCode The unique code used to identify this course.
-     * @param model The view model to add the course data to.
+     * Gets the teaching assistants for a particular course.
+     * @param code The course code.
+     * @param model The view model.
+     * @return The template for viewing the list of teaching assistants.
      */
-    private void addCourseToModelIfExists(String courseCode, Model model) {
-        Optional<Course> courseOptional = this.courseRepository.findByCode(courseCode);
+    @GetMapping("/courses/{code}/teaching_assistants")
+    public String getTeachingAssistants(@PathVariable String code, Model model) {
+        Optional<Course> courseOptional = this.courseRepository.findByCode(code);
         courseOptional.ifPresent(course -> model.addAttribute("course", course));
+        return "courses/entity/teaching_assistants";
     }
 
 }

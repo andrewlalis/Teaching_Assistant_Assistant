@@ -4,10 +4,7 @@ import nl.andrewlalis.teaching_assistant_assistant.model.assignments.grades.Assi
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Person;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +19,14 @@ public class StudentTeam extends Team {
      */
     @Column
     private String githubRepositoryName;
+
+    /**
+     * The teaching assistant team to which this student team is assigned.
+     */
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    private TeachingAssistantTeam assignedTeachingAssistantTeam;
 
     /**
      * The list of assignment grades which this student group has received.
@@ -51,6 +56,14 @@ public class StudentTeam extends Team {
 
     public void setGithubRepositoryName(String name) {
         this.githubRepositoryName = name;
+    }
+
+    public TeachingAssistantTeam getAssignedTeachingAssistantTeam() {
+        return this.assignedTeachingAssistantTeam;
+    }
+
+    public void setAssignedTeachingAssistantTeam(TeachingAssistantTeam team) {
+        this.assignedTeachingAssistantTeam = team;
     }
 
 }

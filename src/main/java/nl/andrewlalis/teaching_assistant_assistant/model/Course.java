@@ -3,6 +3,7 @@ package nl.andrewlalis.teaching_assistant_assistant.model;
 import nl.andrewlalis.teaching_assistant_assistant.model.assignments.Assignment;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Person;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
 
@@ -153,6 +154,16 @@ public class Course extends BasicEntity {
             }
         });
         return students;
+    }
+
+    public List<TeachingAssistant> getTeachingAssistants() {
+        List<TeachingAssistant> teachingAssistants = new ArrayList<>();
+        this.participants.forEach(participant -> {
+            if (participant instanceof TeachingAssistant) {
+                teachingAssistants.add((TeachingAssistant) participant);
+            }
+        });
+        return teachingAssistants;
     }
 
     @Override

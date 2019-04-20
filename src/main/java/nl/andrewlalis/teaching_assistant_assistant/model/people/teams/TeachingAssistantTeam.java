@@ -24,11 +24,23 @@ public class TeachingAssistantTeam extends Team {
     @Column
     private TeachingAssistantRole role;
 
+    /**
+     * The string name of this team.
+     */
+    @Column
+    private String githubTeamName;
+
     @OneToMany
     @JoinColumn(
             name = "teaching_assistant_team_id"
     )
     private List<SectionGrade> sectionGrades;
+
+    @OneToMany
+    @JoinColumn(
+            name = "teaching_assistant_team_id"
+    )
+    private List<StudentTeam> assignedStudentTeams;
 
     /**
      * Default constructor for JPA.
@@ -40,5 +52,13 @@ public class TeachingAssistantTeam extends Team {
         List<TeachingAssistant> teachingAssistants = new ArrayList<>(people.size());
         people.forEach(person -> teachingAssistants.add((TeachingAssistant) person));
         return teachingAssistants;
+    }
+
+    public String getGithubTeamName() {
+        return this.githubTeamName;
+    }
+
+    public void setGithubTeamName(String name) {
+        this.githubTeamName = name;
     }
 }

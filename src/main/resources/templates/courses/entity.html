@@ -12,7 +12,7 @@
 
     <ul>
         <li>
-            <a th:href="@{${'https://www.github.com/' + course.getGithubOrganizationName()}}">Github Organization</a>
+            Github Organization: <a th:href="@{${'https://www.github.com/' + course.getGithubOrganizationName()}}" th:text="${course.getGithubOrganizationName()}"></a>
         </li>
         <li>
             <a th:href="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}">Teaching Assistant Teams</a>
@@ -22,6 +22,9 @@
         </li>
         <li>
             <a th:href="@{/courses/{code}/students(code=${course.getCode()})}">All Students</a>
+        </li>
+        <li>
+            <a th:href="@{/courses/{code}/teaching_assistants(code=${course.getCode()})}">All Teaching Assistants</a>
         </li>
     </ul>
 </div>

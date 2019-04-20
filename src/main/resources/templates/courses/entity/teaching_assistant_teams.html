@@ -9,8 +9,23 @@
 <div id="content">
     <h1>Teaching Assistant Teams for <span th:text="${course.getName()}"></span></h1>
 
+    <div th:if="${course.getTeachingAssistantTeams().isEmpty()}">
+        <p>No teaching assistant teams.</p>
+    </div>
     <table>
-
+        <tr th:each="taTeam: ${course.getTeachingAssistantTeams()}">
+            <td>
+                <a
+                        th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}
+                    (code=${course.getCode()}, team_id=${taTeam.getId()})}">
+                    Teaching Assistant Team <span th:text="${taTeam.getId()}"></span>
+                </a>
+            </td>
+            <td th:each="ta: ${taTeam.getStudents()}">
+                <span th:text="${ta.getFullName()}"></span>
+            </td>
+            <td th:text="${taTeam.getGithubRepositoryName()}"></td>
+        </tr>
     </table>
 </div>
 
