@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,24 +35,57 @@ public class ExportStudentTeams {
         }
 
         Course course = optionalCourse.get();
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
 
-        response.setContentType("text/*");
-
-        OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
-        writer.write("Student Teams Export for course: " + course.getName() + "\n");
-
-        for (TeachingAssistantTeam teachingAssistantTeam : course.getTeachingAssistantTeams()) {
-            writer.write("Teaching Assistant Team " + teachingAssistantTeam.getId() + ", Github team: " + teachingAssistantTeam.getGithubTeamName() + "\n");
-            List<StudentTeam> assignedTeams = teachingAssistantTeam.getAssignedStudentTeams();
-            for (StudentTeam studentTeam : assignedTeams) {
-                writer.write("\tStudent Team " + studentTeam.getId() + ": ");
-                for (Student student : studentTeam.getStudents()) {
-                    writer.write(student.getFullName() + " (S" + student.getStudentNumber() + "), ");
-                }
-                writer.write("\n");
-            }
-        }
+        response.getOutputStream().write(getStudentTeamsSummary(course));
 
         response.flushBuffer();
+    }
+
+    @GetMapping("/courses/{code}/student_teams/export_contact_info")
+    public void exportContactInfo(@PathVariable String code, HttpServletResponse response) throws IOException {
+        Optional<Course> optionalCourse = this.courseRepository.findByCode(code);
+        if (!optionalCourse.isPresent()) {
+            response.sendError(404, "Course with code " + code + " not found");
+            return;
+        }
+
+        Course course = optionalCourse.get();
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+
+        response.getOutputStream().write(getContactInfo(course));
+
+        response.flushBuffer();
+    }
+
+    private byte[] getStudentTeamsSummary(Course course) {
+        StringBuilder sb = new StringBuilder("Student Teams Export for Course: ");
+        sb.append(course.getName()).append('\n');
+        for (TeachingAssistantTeam teachingAssistantTeam : course.getTeachingAssistantTeams()) {
+            sb.append("Teaching Assistant Team ").append(teachingAssistantTeam.getId()).append(", Github Team Name: ").append(teachingAssistantTeam.getGithubTeamName()).append('\n');
+            List<StudentTeam> assignedTeams = teachingAssistantTeam.getAssignedStudentTeams();
+            for (StudentTeam studentTeam : assignedTeams) {
+                sb.append("\tStudent Team ").append(studentTeam.getId()).append(": ");
+                for (Student student : studentTeam.getStudents()) {
+                    sb.append(student.getFullName()).append(" (S").append(student.getStudentNumber()).append("), ");
+                }
+                sb.append('\n');
+            }
+        }
+        return sb.toString().getBytes();
+    }
+
+    private byte[] getContactInfo(Course course) {
+        StringBuilder sb = new StringBuilder("Student Team Contact Details\n");
+        for (StudentTeam team : course.getStudentTeams()) {
+            sb.append("2019_Team_").append(team.getId()).append(": ");
+            for (Student student : team.getStudents()) {
+                sb.append(student.getFullName()).append(" (").append(student.getEmailAddress()).append("), ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString().getBytes();
     }
 }
