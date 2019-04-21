@@ -32,8 +32,16 @@
                     <a th:href="@{/students/{id}(id=${student.getId()})}" th:text="${student.getFullName()}"></a><br>
                 </div>
             </td>
-            <td th:text="${studentTeam.getGithubRepositoryName()}"></td>
             <td>
+                <span th:if="${studentTeam.getGithubRepositoryName() == null}">None</span>
+                <a
+                        target="_blank"
+                        th:if="${studentTeam.getGithubRepositoryName() != null}"
+                        th:href="${'https://github.com/' + studentTeam.getCourse().getGithubOrganizationName() + '/' + studentTeam.getGithubRepositoryName()}"
+                        th:text="${studentTeam.getGithubRepositoryName()}"></a>
+            </td>
+            <td>
+                <span th:if="${studentTeam.getAssignedTeachingAssistantTeam() == null}">None</span>
                 <a
                         th:if="${studentTeam.getAssignedTeachingAssistantTeam() != null}"
                         th:href="@{/courses/{code}/teaching_assistant_teams/{teamId}
@@ -48,6 +56,9 @@
 <div id="sidebar">
     <div class="sidebar_block">
         <a th:href="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}">Generate Repositories</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/export(code=${course.getCode()})}">Export</a>
     </div>
 </div>
 

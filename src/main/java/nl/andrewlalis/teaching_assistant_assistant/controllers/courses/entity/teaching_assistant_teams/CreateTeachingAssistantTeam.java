@@ -40,7 +40,6 @@ public class CreateTeachingAssistantTeam {
             @PathVariable String code,
             @RequestParam(value = "github_team_name") String githubTeamName,
             @RequestParam(value = "id_1") long id1,
-            @RequestParam(value = "id_2") long id2,
             Model model
     ) {
         TeachingAssistantTeam team = new TeachingAssistantTeam();
@@ -48,17 +47,12 @@ public class CreateTeachingAssistantTeam {
 
         Optional<Course> optionalCourse = this.courseRepository.findByCode(code);
         Optional<TeachingAssistant> optionalTeachingAssistant1 = this.teachingAssistantRepository.findById(id1);
-        Optional<TeachingAssistant> optionalTeachingAssistant2 = this.teachingAssistantRepository.findById(id2);
 
-        System.out.println("Course code: " + code + ", Team name: " + githubTeamName + ", TA 1: " + id1 + ", TA 2: " + id2);
-
-        if (optionalCourse.isPresent() && optionalTeachingAssistant1.isPresent() && optionalTeachingAssistant2.isPresent()) {
-            System.out.println("All data available.");
+        if (optionalCourse.isPresent() && optionalTeachingAssistant1.isPresent()) {
             Course course = optionalCourse.get();
             team.setCourse(course);
 
             team.addMember(optionalTeachingAssistant1.get());
-            team.addMember(optionalTeachingAssistant2.get());
 
             course.addTeachingAssistantTeam(team);
             this.courseRepository.save(course);

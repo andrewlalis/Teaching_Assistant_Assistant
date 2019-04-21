@@ -43,6 +43,12 @@ public class ImportStudents {
         return "courses/entity/import_students";
     }
 
+    /**
+     * Performs the actual importing when this controller receives a post request.
+     * @param code The course code.
+     * @param file The file which the user has uploaded.
+     * @return Redirect to the course which will be shown.
+     */
     @PostMapping(
             value = "/courses/{code}/import_students"
     )

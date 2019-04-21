@@ -22,6 +22,16 @@
                 </li>
             </ul>
         </li>
+        <li>
+            Assigned Student Teams:
+            <ul>
+                <li th:each="studentTeam: ${teachingAssistantTeam.getAssignedStudentTeams()}">
+                    <a th:href="@{/courses/{code}/student_teams/{id}(code=${course.getCode()}, id=${studentTeam.getId()})}">
+                        <span th:text="${studentTeam.getId()}"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>
 

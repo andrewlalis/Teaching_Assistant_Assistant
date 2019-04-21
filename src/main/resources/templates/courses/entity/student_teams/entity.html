@@ -17,6 +17,14 @@
             </a>
         </li>
         <li>
+            Assigned Teaching Assistant Team:
+            <a
+                    th:if="${student_team.getAssignedTeachingAssistantTeam() != null}"
+                    th:href="@{/courses/{code}/teaching_assistant_teams/{id}(code=${student_team.getCourse().getCode()}, id=${student_team.getAssignedTeachingAssistantTeam().getId()})}"
+                    th:text="${student_team.getAssignedTeachingAssistantTeam().getId()}"
+            ></a>
+        </li>
+        <li>
             Members:
             <ul>
                 <li th:each="student: ${student_team.getStudents()}">
@@ -31,7 +39,18 @@
 </div>
 
 <div id="sidebar">
-
+    <div class="sidebar_block">
+        <a
+                th:if="${student_team.getGithubRepositoryName() == null}"
+                th:href="@{/courses/{code}/student_teams/{id}/generate_repository
+                (code=${student_team.getCourse().getCode()}, id=${student_team.getAssignedTeachingAssistantTeam().getId()})}"
+        >Generate Repository</a>
+        <a
+                th:if="${student_team.getGithubRepositoryName() != null}"
+                th:href="@{/courses/{code}/student_teams/{id}/delete_repository
+                (code=${student_team.getCourse().getCode()}, id=${student_team.getAssignedTeachingAssistantTeam().getId()})}"
+        >Delete Repository</a>
+    </div>
 </div>
 
 </body>

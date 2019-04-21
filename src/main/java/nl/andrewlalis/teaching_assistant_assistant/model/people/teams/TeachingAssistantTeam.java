@@ -61,4 +61,16 @@ public class TeachingAssistantTeam extends Team {
     public void setGithubTeamName(String name) {
         this.githubTeamName = name;
     }
+
+    public List<StudentTeam> getAssignedStudentTeams() {
+        return this.assignedStudentTeams;
+    }
+
+    public void addAssignedStudentTeam(StudentTeam studentTeam) {
+        this.assignedStudentTeams.add(studentTeam);
+    }
+
+    public void removeAssignedStudentTeam(StudentTeam studentTeam) {
+        this.assignedStudentTeams.remove(studentTeam);
+    }
 }

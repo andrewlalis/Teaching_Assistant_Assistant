@@ -48,6 +48,6 @@ public class TeachingAssistants {
             course.addParticipant(teachingAssistant);
             this.courseRepository.save(course);
         });
-        return "teaching_assistants/entity";
+        return "redirect:/teaching_assistants";
     }
 }

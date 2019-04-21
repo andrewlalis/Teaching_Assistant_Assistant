@@ -1,7 +1,9 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity.student_teams;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
+import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentTeamRepository;
 import nl.andrewlalis.teaching_assistant_assistant.util.github.GithubManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class GenerateRepositories {
 
     private CourseRepository courseRepository;
+    private StudentTeamRepository studentTeamRepository;
 
-    protected GenerateRepositories(CourseRepository courseRepository) {
+    protected GenerateRepositories(CourseRepository courseRepository, StudentTeamRepository studentTeamRepository) {
         this.courseRepository = courseRepository;
+        this.studentTeamRepository = studentTeamRepository;
     }
 
     @GetMapping("/courses/{courseCode}/student_teams/generate_repositories")
@@ -37,12 +41,25 @@ public class GenerateRepositories {
         System.out.println("Post received for " + courseCode);
         Optional<Course> optionalCourse = this.courseRepository.findByCode(courseCode);
         optionalCourse.ifPresent(course -> {
-            course.setGithubOrganizationName("InitializerTesting");
+            GithubManager manager;
+
             try {
-                GithubManager manager = new GithubManager(course.getApiKey());
-                manager.generateStudentTeamRepository(course.getStudentTeams().get(0));
+                manager = new GithubManager(course.getApiKey());
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
+            }
+
+            for (StudentTeam studentTeam : course.getStudentTeams()) {
+                System.out.println("Generating repository for team " + studentTeam.getId());
+                String repositoryName = manager.generateStudentTeamRepository(studentTeam);
+                if (repositoryName == null) {
+                    System.err.println("An error occurred while generating a repository for student team " + studentTeam.getId());
+                    continue;
+                }
+                studentTeam.setGithubRepositoryName(repositoryName);
+                this.studentTeamRepository.save(studentTeam);
+                System.out.println("Done\n");
             }
         });
 
