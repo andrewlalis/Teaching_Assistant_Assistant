@@ -1,6 +1,9 @@
 package nl.andrewlalis.teaching_assistant_assistant.model;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.assignments.Assignment;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.Person;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
 
@@ -28,6 +31,18 @@ public class Course extends BasicEntity {
      */
     @Column(unique = true, nullable = false)
     private String code;
+
+    /**
+     * The github organization name for this course, if any.
+     */
+    @Column
+    private String githubOrganizationName;
+
+    /**
+     * The API key that will be used for Github interaction with this organization.
+     */
+    @Column
+    private String apiKey;
 
     /**
      * The list of assignments this course contains.
@@ -58,12 +73,26 @@ public class Course extends BasicEntity {
     private List<TeachingAssistantTeam> teachingAssistantTeams;
 
     /**
+     * The list of all participants in this course, both teaching assistants and students.
+     */
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "course_participants",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private List<Person> participants;
+
+    /**
      * Default constructor for JPA.
      */
     protected Course() {
         this.assignments = new ArrayList<>();
         this.studentTeams = new ArrayList<>();
         this.teachingAssistantTeams = new ArrayList<>();
+        this.participants = new ArrayList<>();
     }
 
     /**
@@ -77,12 +106,26 @@ public class Course extends BasicEntity {
         this.code = code;
     }
 
-    public void addStudentGroup(StudentTeam group) {
-        this.studentTeams.add(group);
+    public void addStudentTeam(StudentTeam team) {
+        this.studentTeams.add(team);
     }
 
-    public void addTeachingAssistantGroup(TeachingAssistantTeam group) {
-        this.teachingAssistantTeams.add(group);
+    public void addTeachingAssistantTeam(TeachingAssistantTeam team) {
+        this.teachingAssistantTeams.add(team);
+    }
+
+    public void removeTeachingAssistantTeam(TeachingAssistantTeam team) {
+        this.teachingAssistantTeams.remove(team);
+    }
+
+    public void addParticipant(Person person) {
+        if (!this.participants.contains(person)) {
+            this.participants.add(person);
+        }
+    }
+
+    public void removeParticipant(Person person) {
+        this.participants.remove(person);
     }
 
     /*
@@ -97,6 +140,22 @@ public class Course extends BasicEntity {
         return code;
     }
 
+    public String getGithubOrganizationName() {
+        return this.githubOrganizationName;
+    }
+
+    public void setGithubOrganizationName(String name) {
+        this.githubOrganizationName = name;
+    }
+
+    public String getApiKey() {
+        return this.apiKey;
+    }
+
+    public void setApiKey(String key) {
+        this.apiKey = key;
+    }
+
     public List<Assignment> getAssignments() {
         return assignments;
     }
@@ -107,6 +166,26 @@ public class Course extends BasicEntity {
 
     public List<TeachingAssistantTeam> getTeachingAssistantTeams() {
         return teachingAssistantTeams;
+    }
+
+    public List<Student> getStudents() {
+        List<Student> students = new ArrayList<>();
+        this.participants.forEach(participant -> {
+            if (participant instanceof Student) {
+                students.add((Student) participant);
+            }
+        });
+        return students;
+    }
+
+    public List<TeachingAssistant> getTeachingAssistants() {
+        List<TeachingAssistant> teachingAssistants = new ArrayList<>();
+        this.participants.forEach(participant -> {
+            if (participant instanceof TeachingAssistant) {
+                teachingAssistants.add((TeachingAssistant) participant);
+            }
+        });
+        return teachingAssistants;
     }
 
     @Override

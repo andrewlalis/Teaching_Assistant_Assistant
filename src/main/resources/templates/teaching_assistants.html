@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Teaching Assistants</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>All Teaching Assistants</h1>
+
+    <table>
+        <tr th:each="teachingAssistant: ${teaching_assistants}">
+            <td>
+                <a th:href="@{/teaching_assistants/{id}(id=${teachingAssistant.getId()})}"><span th:text="${teachingAssistant.getFullName()}"></span></a>
+            </td>
+            <td th:text="${teachingAssistant.getGithubUsername()}"></td>
+            <td th:text="${teachingAssistant.getEmailAddress()}"></td>
+            <td th:text="${teachingAssistant.getId()}"></td>
+            <td>
+                <a th:href="@{/teaching_assistants/{id}/delete(id=${teachingAssistant.getId()})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

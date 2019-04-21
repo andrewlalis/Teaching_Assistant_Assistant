@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <title>Create a Course</title>
+</head>
+<body>
+
+<div id="content">
+    <p>
+        Create your course here
+    </p>
+    <form action="#" th:action="@{/courses/{code}/teaching_assistants(code=${course.getCode()})}" th:object="${teachingAssistant}" method="post">
+        <label for="ta_first_name_input">First Name:</label>
+        <input id="ta_first_name_input" type="text" th:field="*{firstName}"/>
+
+        <label for="ta_last_name_input">Last Name:</label>
+        <input id="ta_last_name_input" type="text" th:field="*{lastName}"/>
+
+        <label for="ta_github_username_input">Github Username:</label>
+        <input id="ta_github_username_input" type="text" th:field="*{githubUsername}"/>
+
+        <label for="ta_email_input">Email Address:</label>
+        <input id="ta_email_input" type="email" th:field="*{emailAddress}"/>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        block
+    </div>
+</div>
+
+</body>
+</html>

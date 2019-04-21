@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Teams</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Student Teams for <span th:text="${course.getName()}"></span></h1>
+
+    <div th:if="${course.getStudentTeams().isEmpty()}">
+        <p>No student teams.</p>
+    </div>
+    <table>
+        <tr>
+            <th>Team</th>
+            <th>Students</th>
+            <th>Repository Name</th>
+            <th>Assigned TA Team</th>
+        </tr>
+        <tr th:each="studentTeam: ${course.getStudentTeams()}">
+            <td>
+                <a
+                        th:href="@{/courses/{code}/student_teams/{team_id}
+                    (code=${course.getCode()}, team_id=${studentTeam.getId()})}">
+                    Student Team <span th:text="${studentTeam.getId()}"></span>
+                </a>
+            </td>
+            <td>
+                <div th:each="student: ${studentTeam.getStudents()}">
+                    <a th:href="@{/students/{id}(id=${student.getId()})}" th:text="${student.getFullName()}"></a><br>
+                </div>
+            </td>
+            <td>
+                <span th:if="${studentTeam.getGithubRepositoryName() == null}">None</span>
+                <a
+                        target="_blank"
+                        th:if="${studentTeam.getGithubRepositoryName() != null}"
+                        th:href="${'https://github.com/' + studentTeam.getCourse().getGithubOrganizationName() + '/' + studentTeam.getGithubRepositoryName()}"
+                        th:text="${studentTeam.getGithubRepositoryName()}"></a>
+            </td>
+            <td>
+                <span th:if="${studentTeam.getAssignedTeachingAssistantTeam() == null}">None</span>
+                <a
+                        th:if="${studentTeam.getAssignedTeachingAssistantTeam() != null}"
+                        th:href="@{/courses/{code}/teaching_assistant_teams/{teamId}
+                        (code=${course.getCode()}, teamId=${studentTeam.getAssignedTeachingAssistantTeam().getId()})}"
+                        th:text="${studentTeam.getAssignedTeachingAssistantTeam().getId()}"
+                ></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}">Generate Repositories</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/export(code=${course.getCode()})}">Export</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/export_contact_info(code=${course.getCode()})}">Export Team Contact Details</a>
+    </div>
+</div>
+
+</body>
+</html>

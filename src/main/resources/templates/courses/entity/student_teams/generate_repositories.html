@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Repositories</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Generate Repositories for all Student Teams in <span th:text="${course.getName()}"></span></h1>
+
+    <p>
+        Be careful, this may take a little while...
+    </p>
+
+    <form
+            method="post"
+            action="#"
+            enctype="application/x-www-form-urlencoded"
+            th:action="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}"
+    >
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

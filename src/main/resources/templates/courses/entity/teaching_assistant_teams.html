@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Teaching Assistant Teams</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Teaching Assistant Teams for <span th:text="${course.getName()}"></span></h1>
+
+    <div th:if="${course.getTeachingAssistantTeams().isEmpty()}">
+        <p>No teaching assistant teams.</p>
+    </div>
+    <table>
+        <tr th:each="taTeam: ${course.getTeachingAssistantTeams()}">
+            <td>
+                <a
+                        th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}
+                    (code=${course.getCode()}, team_id=${taTeam.getId()})}">
+                    Teaching Assistant Team <span th:text="${taTeam.getId()}"></span>
+                </a>
+            </td>
+            <td th:each="ta: ${taTeam.getTeachingAssistants()}">
+                <span th:text="${ta.getFullName()}"></span>
+            </td>
+            <td th:text="${taTeam.getGithubTeamName()}"></td>
+            <td>
+                <a th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}/delete
+                    (code=${course.getCode()}, team_id=${taTeam.getId()})}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="sidebar">
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/teaching_assistant_teams/create(code=${course.getCode()})}">Create Teaching Assistant Team</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/teaching_assistant_teams/assign_to_student_teams(code=${course.getCode()})}">Assign Teams to Student Teams</a>
+    </div>
+</div>
+
+</body>
+</html>

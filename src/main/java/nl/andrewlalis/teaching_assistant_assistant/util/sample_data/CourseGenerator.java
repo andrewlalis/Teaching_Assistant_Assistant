@@ -56,11 +56,11 @@ public class CourseGenerator extends TestDataGenerator<Course> {
         List<StudentTeam> studentTeams = this.generateStudentTeams();
         List<TeachingAssistantTeam> teachingAssistantTeams = this.generateTeachingAssistantTeams();
         for (StudentTeam team : studentTeams) {
-            course.addStudentGroup(team);
+            course.addStudentTeam(team);
             team.setCourse(course);
         }
         for (TeachingAssistantTeam team : teachingAssistantTeams) {
-            course.addTeachingAssistantGroup(team);
+            course.addTeachingAssistantTeam(team);
             team.setCourse(course);
         }
         return course;

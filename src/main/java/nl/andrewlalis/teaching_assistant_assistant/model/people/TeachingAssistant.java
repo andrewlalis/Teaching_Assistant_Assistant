@@ -15,7 +15,7 @@ public class TeachingAssistant extends Person {
 
     }
 
-    public TeachingAssistant(String firstName, String lastName, String emailAddress) {
-        super(firstName, lastName, emailAddress);
+    public TeachingAssistant(String firstName, String lastName, String githubUsername, String emailAddress) {
+        super(firstName, lastName, emailAddress, githubUsername);
     }
 }

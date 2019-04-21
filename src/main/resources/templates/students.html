@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>All Students</h1>
+
+    <table>
+        <tr>
+            <th>Student</th>
+            <th>Student Number</th>
+            <th>Email</th>
+            <th>Github Username</th>
+            <th>Teams</th>
+        </tr>
+        <tr th:each="student: ${students}">
+            <td>
+                <a th:href="@{/students/{id}(id=${student.getId()})}"><span th:text="${student.getFullName()}"></span></a>
+            </td>
+            <td th:text="${student.getStudentNumber()}"></td>
+            <td th:text="${student.getEmailAddress()}"></td>
+            <td th:text="${student.getGithubUsername()}"></td>
+            <td>
+                <div th:each="team: ${student.getTeams()}">
+                    <a
+                            th:href="@{/courses/{code}/student_teams/{id}(code=${team.getCourse().getCode()}, id=${team.getId()})}"
+                            th:text="${'Student Team ' + team.getId()}"
+                    ></a>
+                    <span> from </span>
+                    <a
+                            th:href="@{/courses/{code}(code=${team.getCourse().getCode()})}"
+                            th:text="${team.getCourse().getName()}"
+                    ></a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>

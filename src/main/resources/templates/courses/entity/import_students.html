@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar_content})}">
+<head>
+    <title>Import Students via CSV</title>
+</head>
+<body>
+
+<div id="content">
+    <p>
+        Please select a CSV file to import.
+    </p>
+
+    <form method="post" action="#" enctype="multipart/form-data" th:action="@{/courses/{code}/import_students(code=${course.getCode()})}">
+        <label for="file_input">File:</label>
+        <input id="file_input" type="file" name="file" accept="text/csv"/>
+        <button type="submit">Submit</button>
+    </form>
+
+</div>
+
+<div id="sidebar_content">
+
+</div>
+
+</body>
+</html>

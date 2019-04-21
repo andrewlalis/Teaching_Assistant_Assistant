@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Repositories</title>
+</head>
+<body>
+
+<div id="content">
+    <h1>Invite All Students in <span th:text="${course.getName()}"></span> to Repository</h1>
+
+    <p>
+        Be careful, this may take a little while...
+    </p>
+
+    <form
+            method="post"
+            action="#"
+            enctype="application/x-www-form-urlencoded"
+            th:action="@{/courses/{code}/students/invite_all(code=${course.getCode()})}"
+    >
+        <label for="repository_name_input">Repository Name:</label>
+        <input id="repository_name_input" type="text" name="repository_name"/>
+
+        <label for="keys_input">Api Keys (separate by newline):</label>
+        <textarea id="keys_input" name="api_keys"></textarea>
+
+        <label for="usernames_input">Usernames (separate by newline):</label>
+        <textarea id="usernames_input" name="usernames"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="sidebar">
+
+</div>
+
+</body>
+</html>
