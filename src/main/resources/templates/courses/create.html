@@ -6,23 +6,33 @@
 <body>
 
 <div id="content">
-    <p>
-        Create your course here
-    </p>
+    <h1>Create New Course</h1>
+
     <form action="#" th:action="@{/courses}" th:object="${course}" method="post">
-        <label for="course_name_input">Name:</label>
-        <input id="course_name_input" type="text" th:field="*{name}" required/>
+        <div class="page_row">
+            <label for="course_name_input">Name:</label>
+            <input id="course_name_input" type="text" th:field="*{name}" required/>
+        </div>
 
-        <label for="course_code_input">Code:</label>
-        <input id="course_code_input" type="text" th:field="*{code}" required/>
+        <div class="page_row">
+            <label for="course_code_input">Code:</label>
+            <input id="course_code_input" type="text" th:field="*{code}" required/>
+        </div>
 
-        <label for="course_github_organization_name_input">Github Organization:</label>
-        <input id="course_github_organization_name_input" type="text" th:field="*{githubOrganizationName}" required/>
+        <div class="page_row">
+            <label for="course_github_organization_name_input">Github Organization:</label>
+            <input id="course_github_organization_name_input" type="text" th:field="*{githubOrganizationName}" required/>
+        </div>
 
-        <label for="course_github_api_key_input">Github API Key:</label>
-        <input id="course_github_api_key_input" type="text" th:field="*{apiKey}" required/>
+        <div class="page_row">
+            <label for="course_github_api_key_input">Github API Key:</label>
+            <input id="course_github_api_key_input" type="text" th:field="*{apiKey}" required/>
+        </div>
 
-        <button type="submit">Submit</button>
+        <div class="page_row">
+            <button type="submit">Submit</button>
+        </div>
+
     </form>
 </div>
 
