@@ -12,12 +12,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.kohsuke.github.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.Calendar;
+import java.util.stream.Collectors;
 
 /**
  * Encapsulates much of the github functionality that is needed.
@@ -159,7 +158,7 @@ public class GithubManager {
         protectionBuilder.includeAdmins(false);
         protectionBuilder.restrictPushAccess();
         protectionBuilder.teamPushAccess(adminTeam);
-        protectionBuilder.addRequiredChecks("ci/circleci");
+        protectionBuilder.addRequiredChecks("ci/circleci: build");
         protectionBuilder.enable();
     }
 
@@ -188,7 +187,9 @@ public class GithubManager {
             HttpResponse response = client.execute(put);
 
             if (response.getStatusLine().getStatusCode() != 201) {
-                throw new IOException("Error adding collaborator via url " + url + " : " + response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
+                String content = new BufferedReader(new InputStreamReader(response.getEntity().getContent()))
+                        .lines().collect(Collectors.joining("\n"));
+                throw new IOException("Error adding collaborator via url " + url + " : " + response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase() + "\n" + content);
             }
         } catch (JsonProcessingException | UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -197,6 +198,28 @@ public class GithubManager {
 
     private void addRepositoryToTeam(GHTeam team, GHRepository repository) throws IOException {
         team.add(repository, GHOrganization.Permission.ADMIN);
+    }
+
+    /**
+     * Updates branch protection for a given repository. That is, removes old branch protection and reinstates it to
+     * follow updated circleci conventions.
+     * @param organizationName The name of the organization.
+     * @param repositoryName The name of the repository.
+     * @param teamName The name of the team responsible for this repository.
+     * @throws IOException If an error occurs with any actions.
+     */
+    public void updateBranchProtection(String organizationName, String repositoryName, String teamName) throws IOException {
+        GHOrganization organization = this.github.getOrganization(organizationName);
+        GHRepository repository = organization.getRepository(repositoryName);
+        GHTeam team = organization.getTeamByName(teamName);
+
+        repository.getBranch("master").disableProtection();
+        GHBranchProtectionBuilder builder = repository.getBranch("master").enableProtection();
+        builder.includeAdmins(false);
+        builder.restrictPushAccess();
+        builder.teamPushAccess(team);
+        builder.addRequiredChecks("ci/circleci: build");
+        builder.enable();
     }
 
 }

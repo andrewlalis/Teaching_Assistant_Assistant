@@ -96,7 +96,7 @@ public class InviteAllToRepository {
                     System.out.println("\tInvited " + username);
                 } catch (IOException e) {
                     //e.printStackTrace();
-                    System.err.println("Could not add " + username + " to repository " + fullRepositoryName);
+                    System.err.println("Could not add " + username + " to repository " + fullRepositoryName + ": " + e.getMessage());
                     failedNames.add(username);
                 }
             }
