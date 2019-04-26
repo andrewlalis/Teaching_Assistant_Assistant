@@ -50,7 +50,17 @@ public class Student extends Person {
      */
     @Override
     public boolean equals(Object o) {
-        return super.equals(o) || this.getStudentNumber() == ((Student) o).getStudentNumber();
+        if (super.equals(o)) {
+            return true;
+        }
+
+        if (!(o instanceof Student)) {
+            return false;
+        }
+
+        Student s = (Student) o;
+
+        return this.getStudentNumber() == s.getStudentNumber();
     }
 
     @Override

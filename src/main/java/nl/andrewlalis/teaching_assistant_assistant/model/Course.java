@@ -110,6 +110,10 @@ public class Course extends BasicEntity {
         this.studentTeams.add(team);
     }
 
+    public void removeStudentTeam(StudentTeam team) {
+        this.studentTeams.remove(team);
+    }
+
     public void addTeachingAssistantTeam(TeachingAssistantTeam team) {
         this.teachingAssistantTeams.add(team);
     }

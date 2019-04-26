@@ -80,10 +80,18 @@ public abstract class Person extends BasicEntity {
         }
     }
 
+    public void removeFromAssignedTeam(Team team) {
+        this.teams.remove(team);
+    }
+
     public void assignToCourse(Course course) {
         if (!this.courses.contains(course)) {
             this.courses.add(course);
         }
+    }
+
+    public void removeFromAssignedCourse(Course course) {
+        this.courses.remove(course);
     }
 
     /*

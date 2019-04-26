@@ -37,12 +37,17 @@
                     ></a>
                 </div>
             </td>
+            <td>
+                <a th:href="@{/students/{id}/remove(id=${student.getId()})}">Remove</a>
+            </td>
         </tr>
     </table>
 </div>
 
 <div id="sidebar">
-
+    <div class="sidebar_block">
+        <a th:href="@{/students/create}">Create Student</a>
+    </div>
 </div>
 
 </body>

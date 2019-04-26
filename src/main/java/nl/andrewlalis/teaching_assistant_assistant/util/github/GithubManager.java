@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -15,7 +16,9 @@ import org.kohsuke.github.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -164,7 +167,7 @@ public class GithubManager {
 
     private void addStudentsAsCollaborators(GHRepository repository, StudentTeam studentTeam) throws IOException {
         for (Student student : studentTeam.getStudents()) {
-            this.addCollaborator(repository.getFullName(), student.getGithubUsername(), "push");
+            this.addCollaborator(repository.getOwnerName(), repository.getName(), student.getGithubUsername(), "push");
         }
 
     }
@@ -174,9 +177,9 @@ public class GithubManager {
         repository.createRef("refs/heads/development", sha1);
     }
 
-    public void addCollaborator(String repositoryName, String githubUsername, String permission) throws IOException {
+    public void addCollaborator(String organizationName, String repositoryName, String githubUsername, String permission) throws IOException {
         try {
-            String url = "https://api.github.com/repos/" + repositoryName + "/collaborators/" + githubUsername + "?access_token=" + this.apiKey;
+            String url = "https://api.github.com/repos/" + organizationName + '/' + repositoryName + "/collaborators/" + githubUsername + "?access_token=" + this.apiKey;
             HttpPut put = new HttpPut(url);
             CloseableHttpClient client = HttpClientBuilder.create().build();
             ObjectMapper mapper = new ObjectMapper();
@@ -194,6 +197,36 @@ public class GithubManager {
         } catch (JsonProcessingException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    public void removeCollaborator(StudentTeam studentTeam, Student student) throws IOException {
+        GHOrganization organization = this.github.getOrganization(studentTeam.getCourse().getGithubOrganizationName());
+        GHRepository repository = organization.getRepository(studentTeam.getGithubRepositoryName());
+        GHUser user = this.github.getUser(student.getGithubUsername());
+
+        repository.removeCollaborators(user);
+    }
+
+    /**
+     * Deactivates a repository by removing all collaborator students, unassigning the repository from the TA team that
+     * was responsible for it, and archiving it.
+     * @param studentTeam The student team for which to archive.
+     * @throws IOException
+     */
+    public void deactivateRepository(StudentTeam studentTeam) throws IOException {
+        GHOrganization organization = this.github.getOrganization(studentTeam.getCourse().getGithubOrganizationName());
+        GHRepository repository = organization.getRepository(studentTeam.getGithubRepositoryName());
+        List<GHUser> users = new ArrayList<>();
+        for (Student s : studentTeam.getStudents()) {
+            users.add(this.github.getUser(s.getGithubUsername()));
+        }
+
+        repository.removeCollaborators(users);
+
+        GHTeam taTeam = organization.getTeamByName(studentTeam.getAssignedTeachingAssistantTeam().getGithubTeamName());
+        taTeam.remove(repository);
+
+        this.archiveRepository(repository);
     }
 
     private void addRepositoryToTeam(GHTeam team, GHRepository repository) throws IOException {
@@ -220,6 +253,25 @@ public class GithubManager {
         builder.teamPushAccess(team);
         builder.addRequiredChecks("ci/circleci: build");
         builder.enable();
+    }
+
+    /**
+     * Archives a repository so that it can no longer be manipulated.
+     * TODO: Change to using Github API instead of Apache HttpUtils.
+     * @param repo The repository to archive.
+     */
+    private void archiveRepository(GHRepository repo) throws IOException {
+        HttpPatch patch = new HttpPatch("https://api.github.com/repos/" + repo.getFullName() + "?access_token=" + this.apiKey);
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode root = mapper.createObjectNode();
+        root.put("archived", true);
+        String json = mapper.writeValueAsString(root);
+        patch.setEntity(new StringEntity(json));
+        HttpResponse response = client.execute(patch);
+        if (response.getStatusLine().getStatusCode() != 200) {
+            throw new IOException("Could not archive repository: " + repo.getName() + ". Code: " + response.getStatusLine().getStatusCode());
+        }
     }
 
 }
