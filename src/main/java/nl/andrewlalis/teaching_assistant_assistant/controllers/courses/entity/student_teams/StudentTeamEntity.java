@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -80,9 +81,11 @@ public class StudentTeamEntity {
         Optional<StudentTeam> optionalStudentTeam = this.studentTeamRepository.findById(teamId);
 
         if (optionalCourse.isPresent() && optionalStudentTeam.isPresent()) {
+            List<Student> eligibleStudents = optionalCourse.get().getStudents();
+            eligibleStudents.sort((s1, s2) -> s1.getLastName().compareToIgnoreCase(s2.getLastName()));
             model.addAttribute("course", optionalCourse.get());
             model.addAttribute("student_team", optionalStudentTeam.get());
-            model.addAttribute("eligible_students", optionalCourse.get().getStudents());
+            model.addAttribute("eligible_students", eligibleStudents);
         }
 
         return "courses/entity/student_teams/entity/add_student";

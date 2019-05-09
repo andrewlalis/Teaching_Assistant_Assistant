@@ -221,7 +221,7 @@ public class GithubManager {
             users.add(this.github.getUser(s.getGithubUsername()));
         }
 
-        repository.removeCollaborators(users);
+        //repository.removeCollaborators(users);
 
         GHTeam taTeam = organization.getTeamByName(studentTeam.getAssignedTeachingAssistantTeam().getGithubTeamName());
         taTeam.remove(repository);
