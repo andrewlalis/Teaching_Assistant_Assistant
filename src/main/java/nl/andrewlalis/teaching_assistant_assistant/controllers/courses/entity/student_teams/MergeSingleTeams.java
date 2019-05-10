@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller for the action to merge all single teams in a course.
+ * TODO: Implement this functionality automatically.
+ */
 @Controller
 public class MergeSingleTeams {
 

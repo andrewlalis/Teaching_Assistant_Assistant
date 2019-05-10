@@ -6,22 +6,23 @@
 <body>
 
 <div id="content">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Created at</th>
-            <th>Students</th>
-        </tr>
-        <tr th:each="course: ${courses}">
-            <td>
-                <a th:href="@{/courses/{code}(code=${course.getCode()})}"  th:text="${course.getName()}"></a>
-            </td>
-            <td th:text="${course.getCode()}"></td>
-            <td th:text="${course.getCreatedOn()}"></td>
-            <td th:text="${course.getStudents().size()}"></td>
-        </tr>
-    </table>
+    <h1>Courses</h1>
+    <hr>
+
+    <ul>
+        <li th:each="course: ${courses}">
+            <h2><a th:href="@{/courses/{code}(code=${course.getCode()})}" th:text="${course.getName()}"></a></h2>
+            <ul>
+                <li>Code: <span th:text="${course.getCode()}"></span></li>
+                <li>Created on: <span th:text="${course.getCreatedOn()}"></span></li>
+                <li>Students: <span th:text="${course.getStudents().size()}"></span></li>
+                <li>Teaching Assistants: <span th:text="${course.getTeachingAssistants().size()}"></span></li>
+                <li>Student Teams: <span th:text="${course.getStudentTeams().size()}"></span></li>
+                <li>Teaching Assistant Teams: <span th:text="${course.getTeachingAssistantTeams().size()}"></span></li>
+                <li>Number of Active Students (in a team): <span th:text="${course.getNumberOfStudentsInTeams()}"></span></li>
+            </ul>
+        </li>
+    </ul>
 </div>
 
 <div id="sidebar">
