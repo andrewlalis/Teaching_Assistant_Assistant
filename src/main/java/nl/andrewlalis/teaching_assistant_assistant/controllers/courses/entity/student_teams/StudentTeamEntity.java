@@ -8,7 +8,7 @@ import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepo
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentRepository;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentTeamRepository;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.TeachingAssistantTeamRepository;
-import nl.andrewlalis.teaching_assistant_assistant.util.github.GithubManager;
+import nl.andrewlalis.teaching_assistant_assistant.services.StudentTeamService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,17 +26,20 @@ public class StudentTeamEntity {
     private CourseRepository courseRepository;
     private StudentRepository studentRepository;
     private TeachingAssistantTeamRepository teachingAssistantTeamRepository;
+    private StudentTeamService studentTeamService;
 
     protected StudentTeamEntity(
             StudentTeamRepository studentTeamRepository,
             CourseRepository courseRepository,
             StudentRepository studentRepository,
-            TeachingAssistantTeamRepository teachingAssistantTeamRepository
+            TeachingAssistantTeamRepository teachingAssistantTeamRepository,
+            StudentTeamService studentTeamService
     ) {
         this.studentTeamRepository = studentTeamRepository;
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.teachingAssistantTeamRepository = teachingAssistantTeamRepository;
+        this.studentTeamService = studentTeamService;
     }
 
     /**
@@ -63,14 +65,16 @@ public class StudentTeamEntity {
         return "courses/entity/student_teams/create";
     }
 
+    /**
+     * Mapping for creating a new student team.
+     * @param courseCode The course code.
+     * @param model The view model.
+     * @return A redirect to the list of student teams.
+     */
     @PostMapping("/courses/{courseCode}/student_teams/create")
     public String postCreate(@PathVariable String courseCode, Model model) {
         Optional<Course> optionalCourse = this.courseRepository.findByCode(courseCode);
-        optionalCourse.ifPresent(course -> {
-            StudentTeam team = new StudentTeam(course);
-            course.addStudentTeam(team);
-            this.courseRepository.save(course);
-        });
+        optionalCourse.ifPresent(course -> this.studentTeamService.createNewStudentTeam(course));
 
         return "redirect:/courses/{courseCode}/student_teams";
     }
@@ -91,6 +95,13 @@ public class StudentTeamEntity {
         return "courses/entity/student_teams/entity/add_student";
     }
 
+    /**
+     * Mapping for adding a new student to this team.
+     * @param courseCode The course code.
+     * @param teamId The id of the team to add the student to.
+     * @param studentId The id of an existing student to add to this team.
+     * @return A redirect to the list of student teams.
+     */
     @PostMapping("/courses/{courseCode}/student_teams/{teamId}/add_student")
     public String postAddStudent(
             @PathVariable String courseCode,
@@ -102,16 +113,10 @@ public class StudentTeamEntity {
         Optional<Student> optionalStudent = this.studentRepository.findById(studentId);
 
         if (optionalCourse.isPresent() && optionalStudentTeam.isPresent() && optionalStudent.isPresent()) {
-            StudentTeam team = optionalStudentTeam.get();
-            Student student = optionalStudent.get();
-
-            team.addMember(student);
-            student.assignToTeam(team);
-            this.studentTeamRepository.save(team);
-            this.studentRepository.save(student);
+            this.studentTeamService.addStudent(optionalStudentTeam.get(), optionalStudent.get());
         }
 
-        return "redirect:/courses/{courseCode}/student_teams";
+        return "redirect:/courses/{courseCode}/student_teams/{teamId}";
     }
 
     @GetMapping("/courses/{courseCode}/student_teams/{teamId}/assign_teaching_assistant_team")
@@ -131,6 +136,13 @@ public class StudentTeamEntity {
         return "courses/entity/student_teams/entity/assign_teaching_assistant_team";
     }
 
+    /**
+     * Endpoint for assigning a teaching assistant team to this student team.
+     * @param courseCode The course code.
+     * @param teamId The id of the student team.
+     * @param teachingAssistantTeamId The id of the teaching assistant team.
+     * @return A redirect to the team responsible.
+     */
     @PostMapping("/courses/{courseCode}/student_teams/{teamId}/assign_teaching_assistant_team")
     public String postAssignTeachingAssistantTeam(
             @PathVariable String courseCode,
@@ -147,29 +159,19 @@ public class StudentTeamEntity {
                 teachingAssistantTeam = optionalTeachingAssistantTeam.get();
             }
 
-            StudentTeam studentTeam = optionalStudentTeam.get();
-            TeachingAssistantTeam oldTeam = studentTeam.getAssignedTeachingAssistantTeam();
-
-            // Unset old TA team if it exists.
-            if (oldTeam != null) {
-                oldTeam.removeAssignedStudentTeam(studentTeam);
-                studentTeam.setAssignedTeachingAssistantTeam(null);
-                this.teachingAssistantTeamRepository.save(oldTeam);
-                this.studentTeamRepository.save(studentTeam);
-            }
-
-            // Set new TA team if it exists.
-            if (teachingAssistantTeam != null) {
-                studentTeam.setAssignedTeachingAssistantTeam(teachingAssistantTeam);
-                teachingAssistantTeam.addAssignedStudentTeam(studentTeam);
-                this.teachingAssistantTeamRepository.save(teachingAssistantTeam);
-                this.studentTeamRepository.save(studentTeam);
-            }
+            this.studentTeamService.assignTeachingAssistantTeam(optionalStudentTeam.get(), teachingAssistantTeam);
         }
 
-        return "redirect:/courses/{courseCode}/student_teams";
+        return "redirect:/courses/{courseCode}/student_teams/{teamId}";
     }
 
+    /**
+     * Endpoint for removing a student from the student team.
+     * @param courseCode The code for the course.
+     * @param teamId The id of the team.
+     * @param studentId The student's id.
+     * @return A redirect to the team after the student is removed.
+     */
     @GetMapping("/courses/{courseCode}/student_teams/{teamId}/remove_student/{studentId}")
     public String getRemoveStudent(
             @PathVariable String courseCode,
@@ -181,26 +183,7 @@ public class StudentTeamEntity {
         Optional<Student> optionalStudent = this.studentRepository.findById(studentId);
 
         if (optionalCourse.isPresent() && optionalStudentTeam.isPresent() && optionalStudent.isPresent()) {
-            Student student = optionalStudent.get();
-            StudentTeam team = optionalStudentTeam.get();
-            Course course = optionalCourse.get();
-
-            // If the team has a github repository, remove this student as a collaborator.
-            if (team.getGithubRepositoryName() != null) {
-                try {
-                    GithubManager manager = new GithubManager(course.getApiKey());
-                    manager.removeCollaborator(team, student);
-                    System.out.println("Removed " + student.getGithubUsername() + " from " + team.getGithubRepositoryName());
-                } catch (IOException e) {
-                    System.err.println("Could not remove student from repository: " + team.getGithubRepositoryName());
-                }
-            }
-
-            team.removeMember(student);
-            student.removeFromAssignedTeam(team);
-
-            this.studentTeamRepository.save(team);
-            this.studentRepository.save(student);
+            this.studentTeamService.removeStudent(optionalStudentTeam.get(), optionalStudent.get());
         }
 
         return "redirect:/courses/{courseCode}/student_teams/{teamId}";
@@ -215,26 +198,7 @@ public class StudentTeamEntity {
         Optional<StudentTeam> optionalStudentTeam = this.studentTeamRepository.findById(teamId);
 
         if (optionalCourse.isPresent() && optionalStudentTeam.isPresent()) {
-            StudentTeam team = optionalStudentTeam.get();
-            Course course = optionalCourse.get();
-
-            if (team.getGithubRepositoryName() == null) {
-                System.out.println("Generating repository.");
-                try {
-                    GithubManager manager = new GithubManager(course.getApiKey());
-                    String name = manager.generateStudentTeamRepository(team);
-                    team.setGithubRepositoryName(name);
-                    this.studentTeamRepository.save(team);
-
-                } catch (IOException e) {
-                    System.err.println("Could not generate repository.");
-                }
-            } else {
-                System.err.println("Repository already exists.");
-            }
-
-        } else {
-            System.err.println("Could not find all objects.");
+            this.studentTeamService.generateRepository(optionalStudentTeam.get());
         }
 
         return "redirect:/courses/{courseCode}/student_teams/{teamId}";
@@ -246,38 +210,7 @@ public class StudentTeamEntity {
         Optional<StudentTeam> optionalStudentTeam = this.studentTeamRepository.findById(teamId);
 
         if (optionalCourse.isPresent() && optionalStudentTeam.isPresent()) {
-            StudentTeam team = optionalStudentTeam.get();
-            Course course = optionalCourse.get();
-
-            // Remove the student team at all costs!
-            if (team.getGithubRepositoryName() != null) {
-                // First remove all student collaborators.
-                try {
-                    GithubManager manager = new GithubManager(course.getApiKey());
-                    manager.deactivateRepository(team);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.err.println("Could not deactivate repository.");
-                }
-            }
-
-            // Remove all students from this team.
-            for (Student s : team.getStudents()) {
-                s.removeFromAssignedTeam(team);
-                team.removeMember(s);
-                this.studentRepository.save(s);
-            }
-
-            // Remove the TA team assignment.
-            TeachingAssistantTeam teachingAssistantTeam = team.getAssignedTeachingAssistantTeam();
-            teachingAssistantTeam.removeAssignedStudentTeam(team);
-            team.setAssignedTeachingAssistantTeam(null);
-            this.teachingAssistantTeamRepository.save(teachingAssistantTeam);
-
-            // Remove the repository from the course and delete it.
-            course.removeStudentTeam(team);
-            this.studentTeamRepository.delete(team);
-            this.courseRepository.save(course);
+            this.studentTeamService.removeTeam(optionalStudentTeam.get());
         }
 
         return "redirect:/courses/{courseCode}/student_teams";

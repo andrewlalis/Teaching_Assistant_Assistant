@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
+/**
+ * Controller for operations dealing with the global collection of students, not particular to one course.
+ */
 @Controller
 public class Students {
 

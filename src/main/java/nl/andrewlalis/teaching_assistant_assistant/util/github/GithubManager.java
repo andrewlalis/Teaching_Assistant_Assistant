@@ -11,6 +11,8 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.*;
 
 import java.io.*;
@@ -25,6 +27,8 @@ import java.util.stream.Collectors;
  * Encapsulates much of the github functionality that is needed.
  */
 public class GithubManager {
+
+    Logger logger = LogManager.getLogger(GithubManager.class);
 
     private GitHub github;
     private String apiKey;
@@ -55,13 +59,14 @@ public class GithubManager {
      * @return The name of the created repository.
      */
     public String generateStudentTeamRepository(StudentTeam team) {
-        GHOrganization organization;
+        logger.info("Generating repository for student team " + team.getId());
 
+        GHOrganization organization;
         try {
             organization = this.github.getOrganization(team.getCourse().getGithubOrganizationName());
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not get Github organization with name: " + team.getCourse().getGithubOrganizationName());
+            logger.error("Could not get Github organization with name: " + team.getCourse().getGithubOrganizationName());
             return null;
         }
 
@@ -71,12 +76,11 @@ public class GithubManager {
 
         // Get the TA team which manages this repository.
         GHTeam teachingAssistantGithubTeam;
-
         try {
             teachingAssistantGithubTeam = organization.getTeamByName(team.getAssignedTeachingAssistantTeam().getGithubTeamName());
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not get team by name: " + team.getAssignedTeachingAssistantTeam().getGithubTeamName());
+            logger.error("Could not get team by name: " + team.getAssignedTeachingAssistantTeam().getGithubTeamName());
             return null;
         }
 
@@ -89,50 +93,56 @@ public class GithubManager {
         repositoryBuilder.autoInit(false);
         GHRepository repository;
         try {
-             repository = repositoryBuilder.create();
+            logger.debug("Creating empty repository " + repositoryName);
+            repository = repositoryBuilder.create();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not create repository: " + repositoryName);
+            logger.error("Could not create repository: " + repositoryName);
             return null;
         }
 
         try {
+            logger.debug("Assigning teaching assistant team " + teachingAssistantGithubTeam.getName() + " to repository.");
             this.addRepositoryToTeam(teachingAssistantGithubTeam, repository);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not add repository " + repositoryName + " to team " + teachingAssistantGithubTeam.getName());
+            logger.error("Could not add repository " + repositoryName + " to team " + teachingAssistantGithubTeam.getName());
             return null;
         }
 
         try {
+            logger.debug("Adding starting file to the repository.");
             this.addStarterFile(repository, "program_resources/getting_started.md", "getting_started.md");
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not add the starter file to the repository: " + repositoryName);
+            logger.error("Could not add the starter file to the repository: " + repositoryName);
             return null;
         }
 
         try {
+            logger.debug("Creating development branch.");
             this.createDevelopmentBranch(repository);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not create development branch for repository: " + repositoryName);
+            logger.error("Could not create development branch for repository: " + repositoryName);
             return null;
         }
 
         try {
+            logger.debug("Adding protections to the master branch.");
             this.protectMasterBranch(repository, teachingAssistantGithubTeam);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not add protections to the master branch of " + repositoryName);
+            logger.error("Could not add protections to the master branch of " + repositoryName);
             return null;
         }
 
         try {
+            logger.debug("Adding students as collaborators.");
             this.addStudentsAsCollaborators(repository, team);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Could not add students as collaborators to " + repositoryName);
+            logger.error("Could not add students as collaborators to " + repositoryName);
             return null;
         }
 
@@ -211,7 +221,7 @@ public class GithubManager {
      * Deactivates a repository by removing all collaborator students, unassigning the repository from the TA team that
      * was responsible for it, and archiving it.
      * @param studentTeam The student team for which to archive.
-     * @throws IOException
+     * @throws IOException If an io exception occurred, duh!
      */
     public void deactivateRepository(StudentTeam studentTeam) throws IOException {
         GHOrganization organization = this.github.getOrganization(studentTeam.getCourse().getGithubOrganizationName());
