@@ -6,6 +6,7 @@ import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.Team;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -110,6 +111,10 @@ public class Course extends BasicEntity {
         this.studentTeams.add(team);
     }
 
+    public void removeStudentTeam(StudentTeam team) {
+        this.studentTeams.remove(team);
+    }
+
     public void addTeachingAssistantTeam(TeachingAssistantTeam team) {
         this.teachingAssistantTeams.add(team);
     }
@@ -200,5 +205,19 @@ public class Course extends BasicEntity {
             sb.append(team.toString()).append('\n');
         }
         return sb.toString();
+    }
+
+    public int getNumberOfStudentsInTeams() {
+        int sum = 0;
+        for (Student s : this.getStudents()) {
+            for (Team team : s.getTeams()) {
+                if (team.getCourse().equals(this)) {
+                    sum++;
+                    break;
+                }
+            }
+        }
+
+        return sum;
     }
 }

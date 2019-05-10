@@ -19,16 +19,25 @@
             enctype="application/x-www-form-urlencoded"
             th:action="@{/courses/{code}/students/invite_all(code=${course.getCode()})}"
     >
-        <label for="repository_name_input">Repository Name:</label>
-        <input id="repository_name_input" type="text" name="repository_name"/>
+        <div class="page_row">
+            <label for="repository_name_input">Repository Name:</label>
+            <input id="repository_name_input" type="text" name="repository_name"/>
+        </div>
 
-        <label for="keys_input">Api Keys (separate by newline):</label>
-        <textarea id="keys_input" name="api_keys"></textarea>
+        <div class="page_row">
+            <label for="keys_input">Api Keys (separate by newline):</label>
+            <textarea id="keys_input" name="api_keys"></textarea>
+        </div>
 
-        <label for="usernames_input">Usernames (separate by newline):</label>
-        <textarea id="usernames_input" name="usernames"></textarea>
+        <div class="page_row">
+            <label for="usernames_input">Usernames (separate by newline):</label>
+            <textarea id="usernames_input" name="usernames"></textarea>
+        </div>
 
-        <button type="submit">Submit</button>
+        <div class="page_row">
+            <button type="submit">Submit</button>
+        </div>
+        
     </form>
 </div>
 

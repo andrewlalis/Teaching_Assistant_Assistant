@@ -58,10 +58,19 @@
         <a th:href="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}">Generate Repositories</a>
     </div>
     <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/branch_protection_update(code=${course.getCode()})}">Update Branch Protection</a>
+    </div>
+    <div class="sidebar_block">
         <a th:href="@{/courses/{code}/student_teams/export(code=${course.getCode()})}">Export</a>
     </div>
     <div class="sidebar_block">
         <a th:href="@{/courses/{code}/student_teams/export_contact_info(code=${course.getCode()})}">Export Team Contact Details</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/create(code=${course.getCode()})}">Create New Student Team</a>
+    </div>
+    <div class="sidebar_block">
+        <a th:href="@{/courses/{code}/student_teams/merge_single_teams(code=${course.getCode()})}">Merge Single Teams</a>
     </div>
 </div>
 

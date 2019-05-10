@@ -47,6 +47,15 @@ public abstract class Team extends BasicEntity {
         this.members = new ArrayList<>();
     }
 
+    /**
+     * Publicly available constructor in which a course is required.
+     * @param course The course that this team is in.
+     */
+    public Team(Course course) {
+        this();
+        this.setCourse(course);
+    }
+
     public void addMember(Person person) {
         if (!this.containsMember(person)) {
             this.members.add(person);

@@ -80,10 +80,18 @@ public abstract class Person extends BasicEntity {
         }
     }
 
+    public void removeFromAssignedTeam(Team team) {
+        this.teams.remove(team);
+    }
+
     public void assignToCourse(Course course) {
         if (!this.courses.contains(course)) {
             this.courses.add(course);
         }
+    }
+
+    public void removeFromAssignedCourse(Course course) {
+        this.courses.remove(course);
     }
 
     /*
@@ -94,8 +102,16 @@ public abstract class Person extends BasicEntity {
         return this.firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getFullName() {
@@ -106,8 +122,16 @@ public abstract class Person extends BasicEntity {
         return this.emailAddress;
     }
 
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
     public String getGithubUsername() {
         return this.githubUsername;
+    }
+
+    public void setGithubUsername(String githubUsername) {
+        this.githubUsername = githubUsername;
     }
 
     public List<Course> getCourses() {

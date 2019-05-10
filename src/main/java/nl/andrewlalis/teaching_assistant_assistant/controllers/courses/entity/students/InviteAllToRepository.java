@@ -63,8 +63,6 @@ public class InviteAllToRepository {
                 keys.add(rawKey.trim());
             }
 
-            String fullRepositoryName = course.getGithubOrganizationName() + '/' + repositoryName;
-
             int inviteCounter = 0;
             GithubManager manager;
             try {
@@ -80,24 +78,30 @@ public class InviteAllToRepository {
                 if (inviteCounter == 50) {
                     System.out.println("Used up 50 invites on key.");
                     try {
+                        if (keys.isEmpty()) {
+                            System.err.println("No more keys.");
+                            failedNames.addAll(githubUsernames);
+                            break;
+                        }
                         manager = new GithubManager(keys.remove(0));
                         inviteCounter = 0;
                     } catch (IOException e) {
                         e.printStackTrace();
                         failedNames.addAll(githubUsernames);
-                        return;
+                        break;
                     }
                 }
 
                 String username = githubUsernames.remove(0);
                 try {
-                    manager.addCollaborator(fullRepositoryName, username, "pull");
+                    manager.addCollaborator(course.getGithubOrganizationName(), repositoryName, username, "pull");
                     inviteCounter++;
                     System.out.println("\tInvited " + username);
                 } catch (IOException e) {
                     //e.printStackTrace();
-                    System.err.println("Could not add " + username + " to repository " + fullRepositoryName);
+                    System.err.println("Could not add " + username + " to repository " + repositoryName + ": " + e.getMessage());
                     failedNames.add(username);
+                    inviteCounter = 50; // Try to use a different key if possible.
                 }
             }
 
