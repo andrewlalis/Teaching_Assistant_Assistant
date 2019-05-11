@@ -18,15 +18,27 @@ import java.util.List;
 )
 public abstract class Person extends BasicEntity {
 
+    /**
+     * The person's first name.
+     */
     @Column(nullable = false)
     private String firstName;
 
+    /**
+     * The person's last name.
+     */
     @Column(nullable = false)
     private String lastName;
 
+    /**
+     * The person's email address.
+     */
     @Column
     private String emailAddress;
 
+    /**
+     * The person's github username.
+     */
     @Column
     private String githubUsername;
 
@@ -74,12 +86,20 @@ public abstract class Person extends BasicEntity {
         this.githubUsername = githubUsername;
     }
 
+    /**
+     * Assigns this person to a team.
+     * @param team The team to assign to.
+     */
     public void assignToTeam(Team team) {
         if (!this.teams.contains(team)) {
             this.teams.add(team);
         }
     }
 
+    /**
+     * Removes this person from a team.
+     * @param team The team to remove from.
+     */
     public void removeFromAssignedTeam(Team team) {
         this.teams.remove(team);
     }
