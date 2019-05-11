@@ -10,6 +10,11 @@ import java.util.List;
 
 /**
  * Represents any person (teaching assistant, student, or other) that exists in this application.
+ *
+ * <p>
+ *     A Person may belong to many {@link Team}s and may also belong to many {@link Course}s, irrespective of Team
+ *     involvement.
+ * </p>
  */
 @Entity
 @Table(name = "people")

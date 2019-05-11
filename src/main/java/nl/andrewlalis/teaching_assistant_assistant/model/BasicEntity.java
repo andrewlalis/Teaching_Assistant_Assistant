@@ -6,18 +6,34 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * The basic entity properties which any entity in this system should have: an id and a creation timestamp. Every entity
- * in this system should extend from BasicEntity.
+ * An abstract object from which all persistent objects in this application should extend.
+ * <p>
+ *     The basic entity properties which any entity in this system should have: an {@code id} and a creation timestamp.
+ *     Every entity in this system should extend from BasicEntity.
+ * </p>
+ *
+ * <p>
+ *     Every single entity in this system therefore is identified uniquely by a Long primary key, although it may also
+ *     be identified by other codes or attributes defined in such an entity. For example, the {@link Course} object has
+ *     a unique code, which can also be used to select a course.
+ * </p>
+ *
  */
 @MappedSuperclass
 public abstract class BasicEntity {
 
+    /**
+     * The primary key for any basic entity.
+     */
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
     private Long id;
 
+    /**
+     * The date at which this basic entity was created.
+     */
     @Temporal(
             value = TemporalType.TIMESTAMP
     )
