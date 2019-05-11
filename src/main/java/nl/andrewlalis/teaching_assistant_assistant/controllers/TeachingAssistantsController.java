@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
+/**
+ * Controller for the list of teaching assistants in the system.
+ */
 @Controller
-public class TeachingAssistants {
+public class TeachingAssistantsController {
 
     private TeachingAssistantRepository teachingAssistantRepository;
     private CourseRepository courseRepository;
 
-    protected TeachingAssistants(TeachingAssistantRepository teachingAssistantRepository, CourseRepository courseRepository) {
+    protected TeachingAssistantsController(TeachingAssistantRepository teachingAssistantRepository, CourseRepository courseRepository) {
         this.teachingAssistantRepository = teachingAssistantRepository;
         this.courseRepository = courseRepository;
     }

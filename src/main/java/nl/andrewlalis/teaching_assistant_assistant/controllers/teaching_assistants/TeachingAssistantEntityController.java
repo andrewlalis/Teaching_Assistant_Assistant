@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
+/**
+ * Controller for a single teaching assistant entity.
+ */
 @Controller
-public class TeachingAssistantEntity {
+public class TeachingAssistantEntityController {
 
     private TeachingAssistantRepository teachingAssistantRepository;
 
-    protected TeachingAssistantEntity(TeachingAssistantRepository teachingAssistantRepository) {
+    protected TeachingAssistantEntityController(TeachingAssistantRepository teachingAssistantRepository) {
         this.teachingAssistantRepository = teachingAssistantRepository;
     }
 

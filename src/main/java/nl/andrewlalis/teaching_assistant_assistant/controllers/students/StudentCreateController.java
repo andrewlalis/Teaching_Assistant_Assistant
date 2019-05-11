@@ -1,9 +1,9 @@
-package nl.andrewlalis.teaching_assistant_assistant.controllers;
+package nl.andrewlalis.teaching_assistant_assistant.controllers.students;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
-import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentRepository;
+import nl.andrewlalis.teaching_assistant_assistant.services.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,25 +14,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 /**
- * Controller for operations dealing with the global collection of students, not particular to one course.
+ * Controller for creating a new student.
  */
 @Controller
-public class Students {
+public class StudentCreateController {
 
+    /**
+     * A constant which defines what value is returned if the user says that the newly created student should not be
+     * part of a course.
+     */
     private static final String NO_COURSE = "NO_COURSE_SELECTED";
 
-    private StudentRepository studentRepository;
     private CourseRepository courseRepository;
+    private StudentService studentService;
 
-    protected Students(StudentRepository studentRepository, CourseRepository courseRepository) {
-        this.studentRepository = studentRepository;
+    protected StudentCreateController(CourseRepository courseRepository, StudentService studentService) {
         this.courseRepository = courseRepository;
-    }
-
-    @GetMapping("/students")
-    public String get(Model model) {
-        model.addAttribute("students", this.studentRepository.findAll());
-        return "students";
+        this.studentService = studentService;
     }
 
     @GetMapping("/students/create")
@@ -49,19 +47,15 @@ public class Students {
     )
     public String postCreate(
             @ModelAttribute Student newStudent,
-            @RequestParam(value = "course_code", required = false) String courseCode
+            @RequestParam(value = "course_code", required = false, defaultValue = NO_COURSE) String courseCode
     ) {
-        this.studentRepository.save(newStudent);
-
-        if (courseCode != null && !courseCode.equals(NO_COURSE)) {
-            Optional<Course> optionalCourse = this.courseRepository.findByCode(courseCode);
-            optionalCourse.ifPresent(course -> {
-                course.addParticipant(newStudent);
-                newStudent.assignToCourse(course);
-                this.courseRepository.save(course);
-                this.studentRepository.save(newStudent);
-            });
+        Optional<Course> optionalCourse = this.courseRepository.findByCode(courseCode);
+        Course course = null;
+        if (optionalCourse.isPresent()) {
+            course = optionalCourse.get();
         }
+
+        this.studentService.createStudent(newStudent, course);
 
         return "redirect:/students";
     }

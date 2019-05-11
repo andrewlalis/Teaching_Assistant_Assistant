@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
  * Controller for the list of courses in the system.
  */
 @Controller
-public class Courses {
+public class CoursesController {
 
     private CourseRepository courseRepository;
 
-    protected Courses(CourseRepository courseRepository) {
+    protected CoursesController(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
 
