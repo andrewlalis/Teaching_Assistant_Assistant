@@ -1,20 +1,26 @@
 package nl.andrewlalis.teaching_assistant_assistant.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private User user;
 
-    public UserDetails(User user) {
+    protected UserDetails(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

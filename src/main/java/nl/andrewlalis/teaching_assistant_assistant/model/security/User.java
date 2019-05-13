@@ -20,11 +20,18 @@ public class User extends BasicEntity {
     @Column(nullable = false, unique = true)
     private String username;
 
+    /**
+     * The password for this user.
+     */
     @Column
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "person_id", nullable = true, referencedColumnName = "id")
+    @JoinColumn(
+            name = "person_id",
+            nullable = true,
+            referencedColumnName = "id"
+    )
     private Person person;
 
     public String getUsername() {

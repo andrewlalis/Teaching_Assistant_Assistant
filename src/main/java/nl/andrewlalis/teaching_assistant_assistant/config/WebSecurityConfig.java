@@ -22,10 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("tester")
-                .password(passwordEncoder().encode("tester"))
-                .roles("USER");
         auth.userDetailsService(this.userDetailsService);
     }
 
@@ -35,25 +31,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // So that we can GET the logout page.
 
                 .authorizeRequests() // Let anyone view the login and logout pages.
-                    .antMatchers("/login*", "/logout*")
+                    .antMatchers("/login*", "/logout*", "/register*")
                     .permitAll()
-                    .anyRequest()
-                    .authenticated()
+                    .and()
+
+                .authorizeRequests()
+                    .antMatchers("/css/**")
+                    .permitAll()
                     .and()
 
                 .authorizeRequests() // Only logged in users should be able to see site content.
                     .antMatchers("/**")
                     .hasRole("USER")
+                    .anyRequest().authenticated()
                     .and()
 
                 .formLogin()
                     .loginPage("/login")
+                    .permitAll()
                     .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/", true)
                     .failureUrl("/login?error")
                     .and()
 
                 .logout()
+                    .permitAll()
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .logoutUrl("/logout")

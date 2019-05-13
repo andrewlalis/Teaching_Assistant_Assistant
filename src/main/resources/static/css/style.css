@@ -1,6 +1,7 @@
 /* Set the font for the whole website here. */
 body {
     font-family: sans-serif;
+    background-color: white;
 }
 
 .content_container {
@@ -30,6 +31,11 @@ body {
 .sidebar_block a {
     text-decoration: underline;
     color: inherit;
+}
+
+.white_link {
+    text-decoration: underline;
+    color: white;
 }
 
 .sidebar_block a:hover {

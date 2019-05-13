@@ -10,7 +10,7 @@
     <hr>
 
     <p>
-        Welcome to the Teaching Assistant Assistant. To find the courses in this application please follow the link to
+        Welcome to the Teaching Assistant Assistant, <span th:text="${user.getPerson().getFullName()}"></span>. To find the courses in this application please follow the link to
         <a th:href="@{/courses}">courses</a>.
     </p>
 

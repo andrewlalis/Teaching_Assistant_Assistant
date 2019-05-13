@@ -3,22 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css"/>
 </head>
 <body>
 
-<div th:if="${param.error}">
-    Invalid username or password!
-</div>
+<div class="content_container">
+    <div class="page_row">
+        <h1>Teaching Assistant <em>Assistant</em></h1>
+    </div>
 
-<div th:if="${param.logout}">
-    You have been logged out!
-</div>
+    <div class="page_row">
+        <div th:if="${param.error}">
+            Invalid username or password!
+        </div>
 
-<form th:action="@{/login}" method="post">
-    <label>Username: <input type="text" name="username"/></label>
-    <label>Password: <input type="password" name="password"/></label>
-    <button type="submit">Login</button>
-</form>
+        <div th:if="${param.logout}">
+            You have been logged out!
+        </div>
+    </div>
+
+    <div class="page_row">
+        <h2>Login</h2>
+        <p>
+            Please log in to access this application.
+        </p>
+    </div>
+
+    <div class="page_row">
+        <form class="login_form" th:action="@{/login}" method="post">
+            <div class="login_form_row">
+                <label for="username_input">Username</label>
+            </div>
+
+            <div class="login_form_row">
+                <input id="username_input" type="text" name="username"/>
+            </div>
+
+            <div class="login_form_row">
+                <label for="password_input">Password</label>
+            </div>
+
+            <div class="login_form_row">
+                <input id="password_input" type="password" name="password"/>
+            </div>
+
+            <div class="login_form_row">
+                <input type="submit" value="Login"/>
+            </div>
+
+            <div class="login_form_row">
+                <a class="white_link" th:href="@{/register}">Don't have an account? Sign up here!</a>
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

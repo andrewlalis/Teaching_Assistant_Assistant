@@ -3,6 +3,7 @@ package nl.andrewlalis.teaching_assistant_assistant.model.people;
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.Team;
+import nl.andrewlalis.teaching_assistant_assistant.model.security.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -67,6 +68,16 @@ public abstract class Person extends BasicEntity {
             mappedBy = "participants"
     )
     private List<Course> courses;
+
+    /**
+     * The authenticated user belonging to this person.
+     */
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            optional = true,
+            mappedBy = "person"
+    )
+    private User user;
 
     /**
      * Default constructor for JPA.
@@ -165,6 +176,14 @@ public abstract class Person extends BasicEntity {
 
     public List<Team> getTeams() {
         return this.teams;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
