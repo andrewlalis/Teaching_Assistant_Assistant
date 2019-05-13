@@ -3,9 +3,11 @@ package nl.andrewlalis.teaching_assistant_assistant.model.security;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     private UserRepository userRepository;
