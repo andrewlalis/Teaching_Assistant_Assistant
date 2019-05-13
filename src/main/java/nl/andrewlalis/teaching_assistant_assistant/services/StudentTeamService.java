@@ -50,7 +50,7 @@ public class StudentTeamService {
         StudentTeam newTeam = new StudentTeam(course);
         course.addStudentTeam(newTeam);
         this.courseRepository.save(course);
-        logger.info("Created new team: " + newTeam.getId());
+        logger.info("Created new team.");
 
         return newTeam;
     }
@@ -185,13 +185,19 @@ public class StudentTeamService {
             s.removeFromAssignedTeam(team);
             team.removeMember(s);
             this.studentRepository.save(s);
+
+            logger.debug("Removed student " + s.getFullName() + " from team " + team.getId());
         }
 
         // Remove the TA team assignment.
         TeachingAssistantTeam teachingAssistantTeam = team.getAssignedTeachingAssistantTeam();
-        teachingAssistantTeam.removeAssignedStudentTeam(team);
+        if (teachingAssistantTeam != null) {
+            teachingAssistantTeam.removeAssignedStudentTeam(team);
+            this.teachingAssistantTeamRepository.save(teachingAssistantTeam);
+            logger.debug("Removed team " + team.getId() + " from Teaching Assistant Team " + teachingAssistantTeam.getId() + " assigned teams list.");
+        }
+
         team.setAssignedTeachingAssistantTeam(null);
-        this.teachingAssistantTeamRepository.save(teachingAssistantTeam);
 
         // Remove the repository from the course and delete it.
         course.removeStudentTeam(team);

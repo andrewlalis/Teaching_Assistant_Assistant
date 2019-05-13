@@ -35,8 +35,7 @@ public class StudentService {
         if (course != null) {
             course.addParticipant(student);
             student.assignToCourse(course);
-            this.courseRepository.save(course);
-            this.studentRepository.save(student);
+            this.courseRepository.save(course); // This cascades to save the student as well.
         }
     }
 
