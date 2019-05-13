@@ -2,9 +2,13 @@ package nl.andrewlalis.teaching_assistant_assistant.services;
 
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
+import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.Team;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentRepository;
+import nl.andrewlalis.teaching_assistant_assistant.model.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Helps with manipulation and various operations on individual students or groups of students (not teams).
@@ -14,10 +18,12 @@ public class StudentService {
 
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
+    private TeamRepository teamRepository;
 
-    protected StudentService (StudentRepository studentRepository, CourseRepository courseRepository) {
+    protected StudentService (StudentRepository studentRepository, CourseRepository courseRepository, TeamRepository teamRepository) {
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
+        this.teamRepository = teamRepository;
     }
 
     /**
@@ -47,6 +53,28 @@ public class StudentService {
         student.setEmailAddress(editedStudent.getEmailAddress());
         student.setGithubUsername(editedStudent.getGithubUsername());
         this.studentRepository.save(student);
+    }
+
+    /**
+     * Removes a student from the application completely.
+     * @param student The student to remove.
+     */
+    public void removeStudent(Student student) {
+        List<Team> teams = student.getTeams();
+        for (Team team : teams) {
+            team.removeMember(student);
+            student.removeFromAssignedTeam(team);
+            this.teamRepository.save(team);
+        }
+
+        List<Course> courses = student.getCourses();
+        for (Course course : courses) {
+            course.removeParticipant(student);
+            student.removeFromAssignedCourse(course);
+            this.courseRepository.save(course);
+        }
+
+        this.studentRepository.delete(student);
     }
 
 }
