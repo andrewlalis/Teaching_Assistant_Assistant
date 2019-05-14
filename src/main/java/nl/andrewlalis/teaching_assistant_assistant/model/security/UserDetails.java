@@ -3,9 +3,13 @@ package nl.andrewlalis.teaching_assistant_assistant.model.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
+/**
+ * TAA-specific implementation of Spring's UserDetails interface to supply user authentication data.
+ */
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private User user;
@@ -20,7 +24,12 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        List<Role> roles = this.user.getRoles();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
     }
 
     @Override
@@ -40,7 +49,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.user.isLocked();
     }
 
     @Override
@@ -50,6 +59,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.user.isActivated();
     }
 }

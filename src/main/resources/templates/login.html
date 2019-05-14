@@ -3,61 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
-    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css"/>
 </head>
 <body>
 
-<div class="content_container">
-    <div class="page_row">
+<section class="container">
+    <div class="row justify-content-center">
         <h1>Teaching Assistant <em>Assistant</em></h1>
     </div>
 
-    <div class="page_row">
-        <div th:if="${param.error}">
+    <div class="row justify-content-center">
+        <div class="alert alert-danger" th:if="${param.error}">
             Invalid username or password!
         </div>
 
-        <div th:if="${param.logout}">
+        <div class="alert alert-success" th:if="${param.logout}">
             You have been logged out!
         </div>
     </div>
 
-    <div class="page_row">
-        <h2>Login</h2>
+    <div class="row justify-content-center">
         <p>
-            Please log in to access this application.
+            Please log in to access to the world's most advanced course organization tool ever created. With the ability to manipulate large groups of students with ease, you might actually enjoy teaching a course.
         </p>
     </div>
 
-    <div class="page_row">
-        <form class="login_form" th:action="@{/login}" method="post">
-            <div class="login_form_row">
+    <div class="row justify-content-center">
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
                 <label for="username_input">Username</label>
+                <input id="username_input" class="form-control" type="text" name="username"/>
             </div>
 
-            <div class="login_form_row">
-                <input id="username_input" type="text" name="username"/>
-            </div>
-
-            <div class="login_form_row">
+            <div class="form-group">
                 <label for="password_input">Password</label>
+                <input id="password_input" class="form-control" type="password" name="password"/>
             </div>
 
-            <div class="login_form_row">
-                <input id="password_input" type="password" name="password"/>
-            </div>
+            <input type="submit" value="Login"/>
 
-            <div class="login_form_row">
-                <input type="submit" value="Login"/>
-            </div>
-
-            <div class="login_form_row">
-                <a class="white_link" th:href="@{/register}">Don't have an account? Sign up here!</a>
-            </div>
+            <a class="white_link" th:href="@{/register}">Don't have an account? Sign up here!</a>
         </form>
     </div>
-</div>
+</section>
+
+<section class="fixed-bottom">
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-xs-12 col-4">
+                <h5>Quick Links</h5>
+            </div>
+            <div class="col-xs-12 col-4">
+                <h5>More links</h5>
+            </div>
+            <div class="col-xs-12 col-4">
+                <h5>Yet more links</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                Social media icons go here.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="h6">
+                    &copy; 2019 Andrew Lalis, all rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

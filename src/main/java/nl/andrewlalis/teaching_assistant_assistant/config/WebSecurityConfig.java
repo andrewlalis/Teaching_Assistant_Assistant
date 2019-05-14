@@ -22,7 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userDetailsService);
+        auth.userDetailsService(this.userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -32,8 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests() // Let anyone view the login and logout pages.
                     .antMatchers("/login*", "/logout*", "/register*")
-                    .permitAll()
-                    .and()
+                        .permitAll()
+                        .and()
 
                 .authorizeRequests()
                     .antMatchers("/css/**")
@@ -41,8 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
 
                 .authorizeRequests() // Only logged in users should be able to see site content.
-                    .antMatchers("/**")
-                    .hasRole("USER")
+                    .antMatchers("/**").authenticated()
                     .anyRequest().authenticated()
                     .and()
 
