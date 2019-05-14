@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * Controller for the course entity, that is, one individual course.
  */
 @Controller
-public class CourseEntity {
+public class CourseEntity extends UserPageController {
 
     private CourseRepository courseRepository;
 

@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.students;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentRepository;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * Controller for a single student entity.
  */
 @Controller
-public class StudentEntityController {
+public class StudentEntityController extends UserPageController {
 
     private StudentRepository studentRepository;
 

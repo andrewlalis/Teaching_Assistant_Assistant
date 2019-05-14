@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
 import nl.andrewlalis.teaching_assistant_assistant.util.sample_data.CourseGenerator;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class Generate {
+public class Generate extends UserPageController {
 
     private CourseRepository courseRepository;
 

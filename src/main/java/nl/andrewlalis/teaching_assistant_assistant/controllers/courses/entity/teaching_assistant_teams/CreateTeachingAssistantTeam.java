@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity.teaching_assistant_teams;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.TeachingAssistant;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.TeachingAssistantTeam;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 @Controller
-public class CreateTeachingAssistantTeam {
+public class CreateTeachingAssistantTeam extends UserPageController {
 
     private CourseRepository courseRepository;
     private TeachingAssistantRepository teachingAssistantRepository;

@@ -1,22 +1,14 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers;
 
-import nl.andrewlalis.teaching_assistant_assistant.model.security.UserDetails;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RootController {
+public class RootController extends UserPageController {
 
-    @RequestMapping(
-            path = "/",
-            produces = "text/html"
-    )
-    public String index(Authentication authentication, Model model) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        model.addAttribute("user", userDetails.getUser());
+    @GetMapping("/")
+    public String index(Model model) {
         return "index";
     }
-
 }

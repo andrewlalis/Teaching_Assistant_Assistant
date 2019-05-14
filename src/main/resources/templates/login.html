@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<section class="container">
+<section id="content" class="container">
     <div class="row justify-content-center">
         <h1>Teaching Assistant <em>Assistant</em></h1>
     </div>
@@ -47,33 +47,9 @@
     </div>
 </section>
 
-<section class="fixed-bottom">
-    <div class="container-fluid">
-        <div class="row text-center">
-            <div class="col-xs-12 col-4">
-                <h5>Quick Links</h5>
-            </div>
-            <div class="col-xs-12 col-4">
-                <h5>More links</h5>
-            </div>
-            <div class="col-xs-12 col-4">
-                <h5>Yet more links</h5>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 text-center">
-                Social media icons go here.
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 text-center">
-                <p class="h6">
-                    &copy; 2019 Andrew Lalis, all rights reserved.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+<div id="sidebar">
+
+</div>
 
 </body>
 </html>

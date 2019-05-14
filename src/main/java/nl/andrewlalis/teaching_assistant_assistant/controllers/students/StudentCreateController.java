@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.students;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
@@ -17,7 +18,7 @@ import java.util.Optional;
  * Controller for creating a new student.
  */
 @Controller
-public class StudentCreateController {
+public class StudentCreateController extends UserPageController {
 
     /**
      * A constant which defines what value is returned if the user says that the newly created student should not be

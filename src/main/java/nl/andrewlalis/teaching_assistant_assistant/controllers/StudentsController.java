@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * Controller for operations dealing with the global collection of students, not particular to one course.
  */
 @Controller
-public class StudentsController {
+public class StudentsController extends UserPageController {
 
     private StudentRepository studentRepository;
 

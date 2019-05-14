@@ -17,7 +17,7 @@ import java.util.Optional;
  * Controller for the list of teaching assistants in the system.
  */
 @Controller
-public class TeachingAssistantsController {
+public class TeachingAssistantsController extends UserPageController {
 
     private TeachingAssistantRepository teachingAssistantRepository;
     private CourseRepository courseRepository;

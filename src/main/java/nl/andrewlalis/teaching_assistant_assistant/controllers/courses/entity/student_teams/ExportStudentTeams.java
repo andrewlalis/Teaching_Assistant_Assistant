@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity.student_teams;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
@@ -18,7 +19,7 @@ import java.util.Optional;
  * Controller for exporting team information into readable files.
  */
 @Controller
-public class ExportStudentTeams {
+public class ExportStudentTeams extends UserPageController {
 
     private CourseRepository courseRepository;
 

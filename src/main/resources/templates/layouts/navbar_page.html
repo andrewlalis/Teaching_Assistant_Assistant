@@ -9,9 +9,7 @@
 </head>
 <body>
 
-<header th:if="${user != null}">
-    <div th:replace="~{fragments/header :: header}"></div>
-</header>
+<header th:replace="~{fragments/header :: header}"></header>
 
 <div class="content_container">
     <div th:replace="${content}">
