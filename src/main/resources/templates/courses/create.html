@@ -1,42 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Create a Course</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Create New Course', content=~{::#content})}" lang="en">
 <body>
 
-<div id="content">
-    <h1>Create New Course</h1>
-
-    <form action="#" th:action="@{/courses}" th:object="${course}" method="post">
-        <div class="page_row">
-            <label for="course_name_input">Name:</label>
-            <input id="course_name_input" type="text" th:field="*{name}" required/>
+<div id="content" class="row justify-content-center">
+    <form th:action="@{/courses}" th:object="${course}" method="post">
+        <div class="form-group">
+            <label for="course_name_input">Name</label>
+            <input id="course_name_input" type="text" class="form-control" th:field="*{name}" required/>
         </div>
 
-        <div class="page_row">
-            <label for="course_code_input">Code:</label>
-            <input id="course_code_input" type="text" th:field="*{code}" required/>
+        <div class="form-group">
+            <label for="course_code_input">Code</label>
+            <input id="course_code_input" type="text" class="form-control" th:field="*{code}" required/>
+            <small class="form-text text-muted">Unique identifying code for this course.</small>
         </div>
 
-        <div class="page_row">
-            <label for="course_github_organization_name_input">Github Organization:</label>
-            <input id="course_github_organization_name_input" type="text" th:field="*{githubOrganizationName}" required/>
+        <div class="form-group">
+            <label for="course_github_organization_name_input">Github Organization</label>
+            <input id="course_github_organization_name_input" type="text" class="form-control" th:field="*{githubOrganizationName}" required/>
         </div>
 
-        <div class="page_row">
-            <label for="course_github_api_key_input">Github API Key:</label>
-            <input id="course_github_api_key_input" type="text" th:field="*{apiKey}" required/>
+        <div class="form-group">
+            <label for="course_github_api_key_input">Github API Key</label>
+            <input id="course_github_api_key_input" type="text" class="form-control" th:field="*{apiKey}" required/>
+            <small class="form-text text-muted">Needed to manage student repositories.</small>
         </div>
 
-        <div class="page_row">
-            <button type="submit">Submit</button>
-        </div>
+        <input class="btn btn-primary" type="submit" value="Create"/>
 
     </form>
-</div>
-
-<div id="sidebar">
 </div>
 
 </body>

@@ -36,7 +36,7 @@ public class StudentCreateController extends UserPageController {
 
     @GetMapping("/students/create")
     public String getCreate(Model model) {
-        model.addAttribute("student", new Student("First Name", "Last Name", "Email Address", "Github Username", 1234567));
+        model.addAttribute("student", new Student(null, null, null, null, 1234567));
         model.addAttribute("courses", this.courseRepository.findAll());
 
         return "students/create";

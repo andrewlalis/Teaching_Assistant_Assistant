@@ -1,39 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Courses</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Courses', content=~{::#content}, actions=~{::#actions})}" lang="en">
 <body>
 
-<div id="content">
-    <h1>Courses</h1>
-    <hr>
-
-    <ul>
-        <li th:each="course: ${courses}">
-            <h2><a th:href="@{/courses/{code}(code=${course.getCode()})}" th:text="${course.getName()}"></a></h2>
-            <ul>
-                <li>Code: <span th:text="${course.getCode()}"></span></li>
-                <li>Created on: <span th:text="${course.getCreatedOn()}"></span></li>
-                <li>Students: <span th:text="${course.getStudents().size()}"></span></li>
-                <li>Teaching Assistants: <span th:text="${course.getTeachingAssistants().size()}"></span></li>
-                <li>Student Teams: <span th:text="${course.getStudentTeams().size()}"></span></li>
-                <li>Teaching Assistant Teams: <span th:text="${course.getTeachingAssistantTeams().size()}"></span></li>
-                <li>Number of Active Students (in a team): <span th:text="${course.getNumberOfStudentsInTeams()}"></span></li>
-            </ul>
-        </li>
-    </ul>
+<div id="actions">
+    <a class="btn btn-primary m-1" th:href="@{/courses/create}">Create New Course</a>
 </div>
 
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a href="/courses/create">Create new course</a>
-    </div>
-    <div class="sidebar_block">
-        Do something else
-    </div>
-    <div class="sidebar_block">
-        Click this link!
+<div id="content" class="container-fluid">
+    <div class="col-sm-12 col-md-6 offset-3">
+        <div class="list-group">
+            <a th:each="course: ${courses}" class="list-group-item list-group-item-action flex-column align-items-start" th:href="@{/courses/{code}(code=${course.getCode()})}">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 class="mb-1" th:text="${course.getName()}"></h4>
+                    <small th:text="${course.getCode()}"></small>
+                </div>
+                <ul>
+                    <li><span class="badge badge-primary" th:text="${course.getStudentTeams().size()}"></span> Student Teams</li>
+                    <li><span class="badge badge-primary" th:text="${course.getNumberOfStudentsInTeams()}"></span> Active Students</li>
+                    <li><span class="badge badge-primary" th:text="${course.getTeachingAssistants().size()}"></span> Teaching Assistants</li>
+                </ul>
+                <small>Created on <span th:text="${course.getCreatedOn()}"></span></small>
+            </a>
+        </div>
     </div>
 </div>
 

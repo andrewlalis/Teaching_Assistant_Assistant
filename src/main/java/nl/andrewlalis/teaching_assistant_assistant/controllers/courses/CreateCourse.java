@@ -18,7 +18,7 @@ public class CreateCourse extends UserPageController {
 
     @GetMapping("/courses/create")
     public String get(Model model) {
-        Course course = new Course("no name", "no code");
+        Course course = new Course(null, null);
         model.addAttribute("course", course);
         return "courses/create";
     }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Register', content=~{::#content})}" lang="en">
+<body>
+
+<section id="content" class="container">
+    <div class="row">
+        <div class="col">
+            <p>
+                Here you can register to create a new account to access the information provided by this application, whether you are a professor, teaching assistant, or student. After filling out this submission form, you'll receive an email with a link to verify that you are who you say you are, after which your account will be activated.
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <form th:action="@{/register}" method="post" th:object="${newUserRegistration}">
+            <div class="form-row">
+                <div class="col">
+                    <label for="first_name_input">First Name</label>
+                    <input id="first_name_input" class="form-control" type="text" th:field="*{firstName}" required/>
+                </div>
+                <div class="col">
+                    <label for="last_name_input">Last Name</label>
+                    <input id="last_name_input" class="form-control" type="text" th:field="*{lastName}" required/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label for="email_input">Email</label>
+                    <input id="email_input" class="form-control" type="text" th:field="*{emailAddress}" required/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label for="username_input">Username</label>
+                    <input id="username_input" class="form-control" type="text" th:field="*{username}" required/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label for="role_select">I am a</label>
+                    <select id="role_select" class="form-control" th:field="*{selectedPersonType}">
+                        <option th:each="personType: ${newUserRegistration.getAvailablePersonTypes()}" th:text="${personType}" th:value="${personType}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <label for="password_input">Password</label>
+                    <input id="password_input" class="form-control" type="password" th:field="*{password}" required/>
+                </div>
+                <div class="col">
+                    <label for="password_confirm_input">Confirm Password</label>
+                    <input id="password_confirm_input" class="form-control" type="password" th:field="*{passwordConfirm}" required/>
+                </div>
+            </div>
+
+            <div class="form-row mt-1">
+                <div class="col">
+                    <input class="btn btn-primary" type="submit" value="Submit"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

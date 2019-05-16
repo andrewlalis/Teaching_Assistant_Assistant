@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Student</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title=${student.getFullName()}, content=~{::#content}, actions=~{::#actions})}">
+
 <body>
 
-<div id="content">
-    <h1>Student: <span th:text="${student.getFullName()}"></span></h1>
+<div id="actions">
+    <a class="btn btn-primary m-1" th:href="@{/students/{id}/edit(id=${student.getId()})}">Edit</a>
+</div>
 
+<div id="content" class="row">
     <ul>
         <li>
             Student Number: <code th:text="${student.getStudentNumber()}"></code>
@@ -27,12 +27,6 @@
             </ul>
         </li>
     </ul>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a th:href="@{/students/{id}/edit(id=${student.getId()})}">Edit</a>
-    </div>
 </div>
 
 </body>

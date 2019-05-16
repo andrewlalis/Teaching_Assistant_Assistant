@@ -1,34 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}" lang="en">
-<head>
-    <title>Homepage</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Home', content=~{::#content})}" lang="en">
 <body>
 
-<div id="content">
-    <h1>Teaching Assistant Assistant</h1>
-    <hr>
+<div id="content" class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h3>Welcome to the Teaching Assistant Assistant, <span th:text="${user.getPerson().getFullName()}"></span>.</h3>
 
-    <p>
-        Welcome to the Teaching Assistant Assistant, <span th:text="${user.getPerson().getFullName()}"></span>. To find the courses in this application please follow the link to <a th:href="@{/courses}">courses</a>.
-    </p>
+            <p>
+                To find the courses in this application please follow the link to <a th:href="@{/courses}">courses</a>.
+            </p>
 
-    <p>
-        This application makes it easy to sift through lots of student groups that are usually handled manually in some
-        spreadsheet. By integrating all data into one web application it is possible to access the information you need
-        faster, and make coordinated changes without fear of introducing inconsistencies or errors.
-    </p>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar_block">
-        This is an example sidebar block.
+            <p>
+                This application makes it easy to sift through lots of student groups that are usually handled manually in some
+                spreadsheet. By integrating all data into one web application it is possible to access the information you need
+                faster, and make coordinated changes without fear of introducing inconsistencies or errors.
+            </p>
+        </div>
     </div>
-    <div id="generate_courses_block" class="sidebar_block">
-        <a href="/courses/generate">Click here to generate test data.</a>
-    </div>
-    <div class="sidebar_block">
-        Another sidebar block with a lot more text in it, so that the text should properly wrap to the next lines if needed.
+
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <h5>Lights, Camera, Action!</h5>
+
+            <p>
+                Throughout the application, you'll find many of these action buttons, which you can use to interact with various objects or pages. Each action will have some accompanying text that describes the results of the action, and anything else you might need to be aware of.
+            </p>
+
+            <p>
+                Sometimes you'll need special permission to perform an action, so if you don't have permission to do so, the action button will appear grayed out, like one of the actions on the right is.
+            </p>
+        </div>
+        <div class="col-6">
+            <div class="card-columns">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <a class="btn btn-primary" href="#">
+                            Do Action
+                        </a>
+                        <p class="card-text">
+                            This text will tell you a little bit about what this action does, so that you think twice before you do some irreparable harm.
+                        </p>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <a class="btn btn-primary" href="#">
+                            Another Action
+                        </a>
+                        <p class="card-text">
+                            Once again, please read these instructions before pressing that button, no matter how appealing it looks.
+                        </p>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <a class="btn btn-primary disabled" href="#">
+                            Do Action
+                        </a>
+                        <p class="card-text">
+                            As you can see, the action button above is <em>disabled</em>, meaning that one of two things happened:
+                        </p>
+                        <ol>
+                            <li>You don't have permission to perform the action.</li>
+                            <li>This action is still a work-in-progress.</li>
+                        </ol>
+                        <p>
+                            If you believe this to be an error, please contact the site administrator and make sure to mention your username and which action you need to perform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
