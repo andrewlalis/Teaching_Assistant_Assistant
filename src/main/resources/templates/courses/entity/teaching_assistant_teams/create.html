@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Create Teaching Assistant Team</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Create Teaching Assistant Team', content=~{::#content})}">
 <body>
 
-<div id="content">
-    <form action="#" th:action="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}" enctype="application/x-www-form-urlencoded" method="post">
-        <label for="ta_team_github_team_name">Github team name:</label>
-        <input id="ta_team_github_team_name" type="text" name="github_team_name"/>
+<div id="content" class="row justify-content-center">
+    <div class="col-sm-12 col-md-6">
+        <form action="#" th:action="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}" enctype="application/x-www-form-urlencoded" method="post">
+            <div class="form-row">
+                <label for="ta_team_github_team_name">Github team name:</label>
+                <input id="ta_team_github_team_name" type="text" name="github_team_name" class="form-control"/>
+            </div>
 
-        <label for="ta_team_member_1">Select the first Team Member:</label>
-        <select id="ta_team_member_1" name="id_1">
-            <option th:each="ta: ${course.getTeachingAssistants()}" th:value="${ta.getId()}" th:text="${ta.getFullName()}"></option>
-        </select>
+            <div class="form-row">
+                <label for="ta_team_member_1">Select the first Team Member:</label>
+                <select id="ta_team_member_1" name="id_1" class="form-control">
+                    <option th:each="ta: ${course.getTeachingAssistants()}" th:value="${ta.getId()}" th:text="${ta.getFullName()}"></option>
+                </select>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
-</div>
-
-<div id="sidebar">
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+    </div>
 
 </div>
 

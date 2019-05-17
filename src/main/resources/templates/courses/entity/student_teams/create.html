@@ -1,27 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Create Student Team</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Create Student Team', content=~{::#content})}">
 <body>
 
-<div id="content">
-    <h1>Create a New Student Team</h1>
-
+<div id="content" class="row justify-content-center">
     <p>
         Creates a new student team for the <span th:text="${course.getName()}"></span> course, without any assigned TA team or student members.
     </p>
 
-    <form action="#" th:action="@{/courses/{code}/student_teams/create(code=${course.getCode()})}" enctype="application/x-www-form-urlencoded" method="post">
+    <form th:action="@{/courses/{code}/student_teams/create(code=${course.getCode()})}" enctype="application/x-www-form-urlencoded" method="post">
 
-        <div class="page_row">
-            <button type="submit">Submit</button>
+        <div class="form-row">
+            <input type="submit" value="Submit" class="btn btn-primary"/>
         </div>
     </form>
-</div>
-
-<div id="sidebar">
-
 </div>
 
 </body>

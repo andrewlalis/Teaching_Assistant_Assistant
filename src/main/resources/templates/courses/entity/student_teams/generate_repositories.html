@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Generate Repositories</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Generate Repositories', content=~{::#content})}">
+
 <body>
 
-<div id="content">
-    <h1>Generate Repositories for all Student Teams in <span th:text="${course.getName()}"></span></h1>
-
+<div id="content" class="row justify-content-center">
     <p>
-        Be careful, this may take a little while...
+        Generate Repositories for all Student Teams in <span th:text="${course.getName()}"></span>. Be careful, this may take a little while...
     </p>
 
     <form
@@ -21,10 +16,6 @@
     >
         <button type="submit">Submit</button>
     </form>
-</div>
-
-<div id="sidebar">
-
 </div>
 
 </body>

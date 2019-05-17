@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Teaching Assistant Team ' + ${teachingAssistantTeam.getId()}, content=~{::#content})}">
 <head>
     <title>Teaching Assistant Team</title>
 </head>
 <body>
 
-<div id="content">
-    <h1>Teaching Assistant Team <span th:text="${teachingAssistantTeam.getId()}"></span> for <span th:text="${course.getName()}"></span></h1>
-
+<div id="content" class="row justify-content-center">
     <ul>
         <li>
             Github Team Name: <code th:text="${teachingAssistantTeam.getGithubTeamName()}"></code>
@@ -33,10 +31,6 @@
             </ul>
         </li>
     </ul>
-</div>
-
-<div id="sidebar">
-
 </div>
 
 </body>

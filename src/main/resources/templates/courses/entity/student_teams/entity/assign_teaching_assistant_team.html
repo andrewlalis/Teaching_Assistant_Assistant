@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Assign Teaching Assistant Team</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Assign Teaching Assistant Team', content=~{::#content})}">
 <body>
 
-<div id="content">
-    <h1>Assign a Teaching Assistant Team to Student Team <span th:text="${student_team.getId()}"></span></h1>
-
+<div id="content" class="row justify-content-center">
     <form
-            action="#"
             th:action="@{/courses/{code}/student_teams/{id}/assign_teaching_assistant_team(code=${course.getCode()}, id=${student_team.getId()})}"
             enctype="application/x-www-form-urlencoded"
             method="post"
     >
-        <div class="page_row">
+        <div class="form-row">
             <label for="ta_team_select">Select a Team:</label>
-            <select id="ta_team_select" name="teaching_assistant_team_id">
+            <select id="ta_team_select" name="teaching_assistant_team_id" class="form-control">
                 <option value="-1">None</option>
                 <option
                         th:each="team: ${course.getTeachingAssistantTeams()}" th:value="${team.getId()}"
@@ -25,8 +19,8 @@
             </select>
         </div>
 
-        <div class="page_row">
-            <button type="submit">Submit</button>
+        <div class="form-row">
+            <input type="submit" value="Submit" class="btn btn-primary"/>
         </div>
     </form>
 </div>

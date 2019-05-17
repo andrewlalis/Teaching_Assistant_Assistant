@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.students.entity;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.StudentRepository;
 import nl.andrewlalis.teaching_assistant_assistant.services.StudentService;
@@ -16,7 +17,7 @@ import java.util.Optional;
  * Controller for editing a student entity.
  */
 @Controller("/students/{id}/edit")
-public class StudentEntityEditController {
+public class StudentEntityEditController extends UserPageController {
 
     private StudentRepository studentRepository;
     private StudentService studentService;

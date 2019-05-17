@@ -1,14 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Team</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Student Team ' + ${student_team.getId()}, content=~{::#content}, actions=~{::#actions})}">
+
 <body>
 
-<div id="content">
-    <h1>Student Team <span th:text="${student_team.getId()}"></span></h1>
+<div id="actions">
+    <th:block th:if="${student_team.getGithubRepositoryName() == null && student_team.getAssignedTeachingAssistantTeam() != null}">
+        <a
+                class="btn btn-primary m-1"
+                th:href="@{/courses/{code}/student_teams/{id}/generate_repository
+                (code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}"
+        >Generate Repository</a>
+    </th:block>
+    <th:block th:if="${student_team.getGithubRepositoryName() != null}">
+        <a
+                class="btn btn-primary m-1"
+                th:href="@{/courses/{code}/student_teams/{id}/delete_repository
+                (code=${student_team.getCourse().getCode()}, id=${student_team.getAssignedTeachingAssistantTeam().getId()})}"
+        >Archive Repository</a>
+    </th:block>
+    <a
+            class="btn btn-primary m-1"
+            th:href="@{/courses/{code}/student_teams/{id}/add_student(code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}">
+        Add Student To Team
+    </a>
+    <a
+            class="btn btn-primary m-1"
+            th:href="@{/courses/{code}/student_teams/{id}/assign_teaching_assistant_team(code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}">
+        Assign Teaching Assistant Team
+    </a>
+    <a
+            class="btn btn-primary m-1"
+            th:href="@{/courses/{code}/student_teams/{id}/remove(code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}">Remove This Team</a>
+</div>
 
+<div id="content" class="row justify-content-center">
     <ul>
         <li>
             Github Repository:
@@ -43,39 +68,13 @@
 </div>
 
 <div id="sidebar">
-    <div class="sidebar_block" th:if="${student_team.getGithubRepositoryName() == null && student_team.getAssignedTeachingAssistantTeam() != null}">
-        <a
-                th:href="@{/courses/{code}/student_teams/{id}/generate_repository
-                (code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}"
-        >Generate Repository</a>
+    <div class="sidebar_block" >
+
     </div>
 
-    <div class="sidebar_block" th:if="${student_team.getGithubRepositoryName() != null}">
-        <a
-                th:href="@{/courses/{code}/student_teams/{id}/delete_repository
-                (code=${student_team.getCourse().getCode()}, id=${student_team.getAssignedTeachingAssistantTeam().getId()})}"
-        >Archive Repository</a>
-    </div>
+    <div class="sidebar_block" >
 
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/{id}/add_student(code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}">
-            Add Student To Team
-        </a>
     </div>
-
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/{id}/assign_teaching_assistant_team(code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}">
-            Assign Teaching Assistant Team
-        </a>
-    </div>
-
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/{id}/remove(code=${student_team.getCourse().getCode()}, id=${student_team.getId()})}">Remove This Team</a>
-        <p>
-            Removes this team permanently, and archives the repository.
-        </p>
-    </div>
-</div>
 
 </body>
 </html>
