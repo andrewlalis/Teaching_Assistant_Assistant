@@ -80,10 +80,17 @@ public class ExportStudentTeams extends UserPageController {
 
     private byte[] getContactInfo(Course course) {
         StringBuilder sb = new StringBuilder("Student Team Contact Details\n");
+        sb.append("--------------------------------------------\n");
+        sb.append("Student Number, Name, Email, Github Username\n");
+        sb.append("--------------------------------------------\n");
         for (StudentTeam team : course.getStudentTeams()) {
-            sb.append("2019_Team_").append(team.getId()).append(": ");
+            sb.append("Team ").append(team.getId()).append(":\n");
             for (Student student : team.getStudents()) {
-                sb.append(student.getFullName()).append(" (").append(student.getEmailAddress()).append("), ");
+                sb.append("\t - s").append(student.getStudentNumber())
+                        .append(", ").append(student.getFullName())
+                        .append(", ").append(student.getEmailAddress())
+                        .append(", ").append(student.getGithubUsername())
+                        .append('\n');
             }
             sb.append("\n");
         }
