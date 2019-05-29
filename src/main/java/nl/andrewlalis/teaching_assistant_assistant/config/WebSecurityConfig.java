@@ -10,6 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Security configuration for the TAA application.
+ *
+ * This configuration makes use of the custom user details service provided by the application for database-persistent
+ * user accounts.
+ *
+ * Login, logout, and registration pages are set so that all users, authenticated and unauthenticated, may access them,
+ * while actual site content is only visible to authenticated users.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -31,8 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() // So that we can GET the logout page.
 
-                .authorizeRequests() // Let anyone view the login and logout pages.
-                    .antMatchers("/login*", "/logout*", "/register*")
+                .authorizeRequests() // Let anyone view the login and logout pages, as well as various registration pages.
+                    .antMatchers("/login*", "/logout*", "/register*", "/register/**")
                         .permitAll()
                         .and()
 

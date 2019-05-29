@@ -15,8 +15,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public String get() {
-        logger.info("User got login page.");
-
         return "login";
     }
 }
