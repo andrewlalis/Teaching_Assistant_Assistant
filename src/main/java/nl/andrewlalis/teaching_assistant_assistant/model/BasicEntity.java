@@ -38,7 +38,7 @@ public abstract class BasicEntity {
             value = TemporalType.TIMESTAMP
     )
     @CreationTimestamp
-    @Column
+    @Column(nullable = false)
     private Date createdOn;
 
     protected BasicEntity() {}

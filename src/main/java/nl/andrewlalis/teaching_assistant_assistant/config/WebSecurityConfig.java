@@ -51,8 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
 
                 .authorizeRequests() // Only logged in users should be able to see site content.
-                    .antMatchers("/**").authenticated()
-                    .anyRequest().authenticated()
+                    .antMatchers("/**").hasRole("user")
+                    .anyRequest().hasRole("user")
                     .and()
 
                 .formLogin()
@@ -72,6 +72,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID");
     }
 
+    /**
+     * Configures Spring Security to use a specific password encoder.
+     * @return The password encoder to use.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

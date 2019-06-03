@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * A custom user details service to supply database persistent user information to Spring Security.
+ */
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
