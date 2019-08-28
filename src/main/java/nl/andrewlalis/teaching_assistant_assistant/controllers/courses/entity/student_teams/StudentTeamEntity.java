@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity.student_teams;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class StudentTeamEntity {
+public class StudentTeamEntity extends UserPageController {
 
     private StudentTeamRepository studentTeamRepository;
     private CourseRepository courseRepository;

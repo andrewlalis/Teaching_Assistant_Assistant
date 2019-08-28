@@ -1,31 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Teaching Assistants</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Teaching Assistants', content=~{::#content})}">
+
 <body>
 
 <div id="content">
-    <h1>All Teaching Assistants</h1>
-
-    <table>
+    <table class="table">
+        <tr>
+            <th>Teaching Assistant</th>
+            <th>Github Username</th>
+            <th>Email</th>
+            <th>Courses</th>
+            <th>Delete</th>
+        </tr>
         <tr th:each="teachingAssistant: ${teaching_assistants}">
             <td>
                 <a th:href="@{/teaching_assistants/{id}(id=${teachingAssistant.getId()})}"><span th:text="${teachingAssistant.getFullName()}"></span></a>
             </td>
             <td th:text="${teachingAssistant.getGithubUsername()}"></td>
             <td th:text="${teachingAssistant.getEmailAddress()}"></td>
-            <td th:text="${teachingAssistant.getId()}"></td>
+            <td>
+                <div th:each="course: ${teachingAssistant.getCourses()}">
+                    <a th:href="@{/courses/{code}(code=${course.getCode()})}" th:text="${course.getName()}"></a><br>
+                </div>
+            </td>
             <td>
                 <a th:href="@{/teaching_assistants/{id}/delete(id=${teachingAssistant.getId()})}">Delete</a>
             </td>
         </tr>
     </table>
-</div>
-
-<div id="sidebar">
-
 </div>
 
 </body>

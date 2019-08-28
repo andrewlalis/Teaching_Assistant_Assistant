@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${course.getName()}"></title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title=${course.getName()}, content=~{::#content}, actions=~{::#actions})}">
 <body>
 
-<div id="content">
-    <h1><span th:text="${course.getName()}"></span> (Code: <span th:text="${course.getCode()}"></span>)</h1>
-    <hr>
-
-    <ul>
-        <li>
-            Github Organization: <a th:href="@{${'https://www.github.com/' + course.getGithubOrganizationName()}}" th:text="${course.getGithubOrganizationName()}"></a>
-        </li>
-        <li>
-            <a th:href="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}">Teaching Assistant Teams</a>
-        </li>
-        <li>
-            <a th:href="@{/courses/{code}/student_teams(code=${course.getCode()})}">Student Teams</a>
-        </li>
-        <li>
-            <a th:href="@{/courses/{code}/students(code=${course.getCode()})}">All Students</a>
-        </li>
-        <li>
-            <a th:href="@{/courses/{code}/teaching_assistants(code=${course.getCode()})}">All Teaching Assistants</a>
-        </li>
-    </ul>
+<div id="actions">
+    <a class="btn btn-primary m-1" th:href="@{/courses/{code}/import_students(code=${course.getCode()})}">Import Students From CSV</a>
+    <a class="btn btn-primary m-1" th:href="@{/courses/{code}/import_teaching_assistants(code=${course.getCode()})}">Import Teaching Assistants From CSV</a>
 </div>
 
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/import_students(code=${course.getCode()})}">Import students from CSV</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:disabled="true" th:href="@{/courses/{code}/import_teaching_assistants(code=${course.getCode()})}">Import teaching assistants from CSV</a>
+<div id="content" class="row justify-content-center">
+    <div class="col-sm-12 col-md-6">
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" th:href="@{${'https://www.github.com/' + course.getGithubOrganizationName()}}">
+                Github Organization: <span th:text="${course.getGithubOrganizationName()}"></span>
+            </a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" th:href="@{/courses/{code}/teaching_assistant_teams(code=${course.getCode()})}">
+                Teaching Assistant Teams
+                <span class="badge badge-primary" th:text="${course.getTeachingAssistantTeams().size()}"></span>
+            </a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" th:href="@{/courses/{code}/student_teams(code=${course.getCode()})}">
+                Student Teams
+                <span class="badge badge-primary" th:text="${course.getStudentTeams().size()}"></span>
+            </a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" th:href="@{/courses/{code}/students(code=${course.getCode()})}">
+                Students
+                <span class="badge badge-primary" th:text="${course.getStudents().size()}"></span>
+            </a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" th:href="@{/courses/{code}/teaching_assistants(code=${course.getCode()})}">
+                Teaching Assistants
+                <span class="badge badge-primary" th:text="${course.getTeachingAssistants().size()}"></span>
+            </a>
+        </div>
     </div>
 </div>
 

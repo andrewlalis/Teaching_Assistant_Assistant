@@ -5,19 +5,32 @@
 </head>
 <body>
 
-<footer th:fragment="footer" class="footer_bar">
-<!--    <link rel="stylesheet" href="../../../resources/static/css/footer.css" th:href="@{/css/footer.css}"/>-->
+<footer th:fragment="footer" class="container-fluid footer fixed-bottom">
+    <link rel="stylesheet" th:href="@{/css/footer.css}" type="text/css"/>
 
-<!--    <div class="third">-->
-<!--        First third of footer-->
-<!--    </div>-->
-<!--    <div class="third">-->
-<!--        Middle of footer-->
-<!--    </div>-->
-<!--    <div class="third">-->
-<!--        Right side of footer.-->
-<!--    </div>-->
-
+    <div class="row text-center">
+        <div class="col-sm-12 col-md-4">
+            <h5>Quick Links</h5>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <h5>More links</h5>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <h5>Yet more links</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            Social media icons go here.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <p class="h6">
+                &copy; 2019 Andrew Lalis, all rights reserved.
+            </p>
+        </div>
+    </div>
 </footer>
 
 </body>

@@ -1,52 +1,7 @@
-/* Set the font for the whole website here. */
-body {
-    font-family: sans-serif;
-}
+/*.btn-primary {*/
+/*    background-color: green;*/
+/*}*/
 
-.content_container {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-    font-size: 16px;
-    color: black;
-}
-
-.sidebar_container {
-    width: 20%;
-    height: 100%;
-    position: fixed;
-    top: 70px;
-    right: 0;
-}
-
-.sidebar_block {
-    margin: 20px 0 20px 0;
-    padding: 20px;
-    background-color: green;
-    color: whitesmoke;
-}
-
-.sidebar_block a {
-    text-decoration: underline;
-    color: inherit;
-}
-
-.sidebar_block a:hover {
-    color: lightgreen;
-}
-
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.page_row {
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-label {
-    font-weight: bold;
-}
+/*.btn-primary:hover {*/
+/*    background-color: darkgreen;*/
+/*}*/

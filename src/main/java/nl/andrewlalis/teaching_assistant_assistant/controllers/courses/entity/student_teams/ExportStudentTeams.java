@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity.student_teams;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.Student;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
@@ -18,7 +19,7 @@ import java.util.Optional;
  * Controller for exporting team information into readable files.
  */
 @Controller
-public class ExportStudentTeams {
+public class ExportStudentTeams extends UserPageController {
 
     private CourseRepository courseRepository;
 
@@ -79,10 +80,17 @@ public class ExportStudentTeams {
 
     private byte[] getContactInfo(Course course) {
         StringBuilder sb = new StringBuilder("Student Team Contact Details\n");
+        sb.append("--------------------------------------------\n");
+        sb.append("Student Number, Name, Email, Github Username\n");
+        sb.append("--------------------------------------------\n");
         for (StudentTeam team : course.getStudentTeams()) {
-            sb.append("2019_Team_").append(team.getId()).append(": ");
+            sb.append("Team ").append(team.getId()).append(":\n");
             for (Student student : team.getStudents()) {
-                sb.append(student.getFullName()).append(" (").append(student.getEmailAddress()).append("), ");
+                sb.append("\t - s").append(student.getStudentNumber())
+                        .append(", ").append(student.getFullName())
+                        .append(", ").append(student.getEmailAddress())
+                        .append(", ").append(student.getGithubUsername())
+                        .append('\n');
             }
             sb.append("\n");
         }

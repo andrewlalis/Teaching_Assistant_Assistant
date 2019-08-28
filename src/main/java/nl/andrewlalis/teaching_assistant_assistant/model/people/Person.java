@@ -3,6 +3,7 @@ package nl.andrewlalis.teaching_assistant_assistant.model.people;
 import nl.andrewlalis.teaching_assistant_assistant.model.BasicEntity;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.Team;
+import nl.andrewlalis.teaching_assistant_assistant.model.security.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,11 @@ import java.util.List;
 
 /**
  * Represents any person (teaching assistant, student, or other) that exists in this application.
+ *
+ * <p>
+ *     A Person may belong to many {@link Team}s and may also belong to many {@link Course}s, irrespective of Team
+ *     involvement.
+ * </p>
  */
 @Entity
 @Table(name = "people")
@@ -18,15 +24,27 @@ import java.util.List;
 )
 public abstract class Person extends BasicEntity {
 
+    /**
+     * The person's first name.
+     */
     @Column(nullable = false)
     private String firstName;
 
+    /**
+     * The person's last name.
+     */
     @Column(nullable = false)
     private String lastName;
 
+    /**
+     * The person's email address.
+     */
     @Column
     private String emailAddress;
 
+    /**
+     * The person's github username.
+     */
     @Column
     private String githubUsername;
 
@@ -52,6 +70,16 @@ public abstract class Person extends BasicEntity {
     private List<Course> courses;
 
     /**
+     * The authenticated user belonging to this person.
+     */
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            optional = true,
+            mappedBy = "person"
+    )
+    private User user;
+
+    /**
      * Default constructor for JPA.
      */
     protected Person () {
@@ -74,12 +102,20 @@ public abstract class Person extends BasicEntity {
         this.githubUsername = githubUsername;
     }
 
+    /**
+     * Assigns this person to a team.
+     * @param team The team to assign to.
+     */
     public void assignToTeam(Team team) {
         if (!this.teams.contains(team)) {
             this.teams.add(team);
         }
     }
 
+    /**
+     * Removes this person from a team.
+     * @param team The team to remove from.
+     */
     public void removeFromAssignedTeam(Team team) {
         this.teams.remove(team);
     }
@@ -140,6 +176,14 @@ public abstract class Person extends BasicEntity {
 
     public List<Team> getTeams() {
         return this.teams;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

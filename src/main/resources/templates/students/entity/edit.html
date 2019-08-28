@@ -1,53 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Edit Student</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Edit Student', content=~{::#content})}">
 <body>
 
-<div id="content">
-    <h1>Edit Student: <span th:text="${student.getFullName()}"></span></h1>
+<div id="content" class="row justify-content-center">
+    <div class="col-sm-12 col-md-6">
+        <form
+                th:action="@{/students/{id}/edit(id=${student.getId()})}" th:object="${student}"
+                method="post"
+        >
 
-    <form
-            action="#"
-            th:action="@{/students/{id}/edit(id=${student.getId()})}" th:object="${student}"
-            method="post"
-    >
+            <div class="form-row">
+                <label for="first_name_input">First Name:</label>
+                <input id="first_name_input" type="text" th:field="*{firstName}" required />
+            </div>
 
-        <div class="page_row">
-            <label for="first_name_input">First Name:</label>
-            <input id="first_name_input" type="text" th:field="*{firstName}" required />
-        </div>
+            <div class="form-row">
+                <label for="last_name_input">Last Name:</label>
+                <input id="last_name_input" type="text" th:field="*{lastName}" required />
+            </div>
 
-        <div class="page_row">
-            <label for="last_name_input">Last Name:</label>
-            <input id="last_name_input" type="text" th:field="*{lastName}" required />
-        </div>
+            <div class="form-row">
+                <label for="email_input">Email Address:</label>
+                <input id="email_input" type="email" th:field="*{emailAddress}" required />
+            </div>
 
-        <div class="page_row">
-            <label for="email_input">Email Address:</label>
-            <input id="email_input" type="email" th:field="*{emailAddress}" required />
-        </div>
+            <div class="form-row">
+                <label for="github_username_input">Github Username:</label>
+                <input id="github_username_input" type="text" th:field="*{githubUsername}" required />
+            </div>
 
-        <div class="page_row">
-            <label for="github_username_input">Github Username:</label>
-            <input id="github_username_input" type="text" th:field="*{githubUsername}" required />
-        </div>
+            <div class="form-row">
+                <label for="student_number_input">Student Number:</label>
+                <input id="student_number_input" type="number" th:field="*{studentNumber}" required />
+            </div>
 
-        <div class="page_row">
-            <label for="student_number_input">Student Number:</label>
-            <input id="student_number_input" type="number" th:field="*{studentNumber}" required />
-        </div>
-
-        <div class="page_row">
-            <button type="submit">Submit</button>
-        </div>
-    </form>
-
-</div>
-
-<div id="sidebar">
-
+            <div class="form-row">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

@@ -1,30 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Teaching Assistant Teams</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Teaching Assistants for ' + ${course.getCode()}, content=~{::#content}, actions=~{::#actions})}">
+
 <body>
 
-<div id="content">
-    <h1>Teaching Assistant Teams for <span th:text="${course.getName()}"></span></h1>
+<div id="actions">
+    <a class="btn btn-primary m-1" th:href="@{/courses/{code}/teaching_assistant_teams/create(code=${course.getCode()})}">
+        Create Teaching Assistant Team
+    </a>
+    <a class="btn btn-primary m-1" th:href="@{/courses/{code}/teaching_assistant_teams/assign_to_student_teams(code=${course.getCode()})}">
+        Assign Teams to Student Teams
+    </a>
+</div>
 
+<div id="content" class="row justify-content-center">
     <div th:if="${course.getTeachingAssistantTeams().isEmpty()}">
         <p>No teaching assistant teams.</p>
     </div>
-    <table>
+    <table class="table table-striped">
+        <tr>
+            <th>Team</th>
+            <th>Teaching Assistants</th>
+            <th>Github Team</th>
+            <th>Assigned Student Teams</th>
+            <th>Delete</th>
+        </tr>
         <tr th:each="taTeam: ${course.getTeachingAssistantTeams()}">
             <td>
-                <a
-                        th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}
+                <a th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}
                     (code=${course.getCode()}, team_id=${taTeam.getId()})}">
                     Teaching Assistant Team <span th:text="${taTeam.getId()}"></span>
                 </a>
             </td>
-            <td th:each="ta: ${taTeam.getTeachingAssistants()}">
-                <span th:text="${ta.getFullName()}"></span>
+            <td>
+                <div th:each="ta: ${taTeam.getTeachingAssistants()}">
+                    <a th:href="@{/teaching_assistants/{id}(id=${ta.getId()})}" th:text="${ta.getFullName()}"></a><br>
+                </div>
             </td>
-            <td th:text="${taTeam.getGithubTeamName()}"></td>
+            <td>
+                <a
+                        th:href="'https://www.github.com/orgs/' + ${course.getGithubOrganizationName()} + '/teams/' + ${taTeam.getGithubTeamName().toLowerCase()}"
+                        th:text="${taTeam.getGithubTeamName()}"
+                        target="_blank"
+                ></a>
+            </td>
+            <td>
+                <div th:each="studentTeam: ${taTeam.getAssignedStudentTeams()}">
+                    <a th:href="@{/courses/{code}/student_teams/{id}(code=${course.getCode()}, id=${studentTeam.getId()})}" th:text="'Student Team ' + ${studentTeam.getId()}"></a>
+                </div>
+            </td>
             <td>
                 <a th:href="@{/courses/{code}/teaching_assistant_teams/{team_id}/delete
                     (code=${course.getCode()}, team_id=${taTeam.getId()})}">
@@ -33,15 +56,6 @@
             </td>
         </tr>
     </table>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/teaching_assistant_teams/create(code=${course.getCode()})}">Create Teaching Assistant Team</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/teaching_assistant_teams/assign_to_student_teams(code=${course.getCode()})}">Assign Teams to Student Teams</a>
-    </div>
 </div>
 
 </body>

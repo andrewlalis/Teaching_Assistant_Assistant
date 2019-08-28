@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A group consisting of one or more members. Child classes should define P as a sub class of Person to define custom
- * behavior if needed.
- * @param <P> The type of members this group contains.
+ * A group consisting of one or more members that belongs to a {@link Course}.
+ *
+ * <p>
+ *     Any Team contains a collection of {@link Person} objects, each representing a member of the team.
+ * </p>
  */
 @Entity
 @Inheritance(

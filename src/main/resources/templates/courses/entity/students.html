@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Students</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Students in ' + ${course.getCode()}, content=~{::#content}, actions=~{::#actions})}">
+
 <body>
 
-<div id="content">
-    <h1>Students in <span th:text="${course.getName()}"></span></h1>
+<div id="actions">
+    <a class="btn btn-primary m-1" th:href="@{/courses/{code}/students/invite_all(code=${course.getCode()})}">
+        Invite All Students To Repository
+    </a>
+</div>
 
-    <table>
+<div id="content">
+    <table class="table table-striped">
         <tr>
             <th>Student</th>
             <th>Student Number</th>
@@ -23,12 +24,6 @@
             <td th:text="${student.getEmailAddress()}"></td>
         </tr>
     </table>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/students/invite_all(code=${course.getCode()})}">Invite All Students To Repository</a>
-    </div>
 </div>
 
 </body>

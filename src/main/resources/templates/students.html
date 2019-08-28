@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Students', content=~{::#content}, actions=~{::#actions})}">
 <head>
     <meta charset="UTF-8">
     <title>Students</title>
 </head>
 <body>
 
-<div id="content">
-    <h1>All Students</h1>
+<div id="actions">
+    <a class="btn btn-primary m-1" th:href="@{/students/create}">Create Student</a>
+</div>
 
-    <table>
+<div id="content" class="row">
+    <table class="table">
         <tr>
             <th>Student</th>
             <th>Student Number</th>
@@ -42,12 +44,6 @@
             </td>
         </tr>
     </table>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a th:href="@{/students/create}">Create Student</a>
-    </div>
 </div>
 
 </body>

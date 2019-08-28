@@ -1,5 +1,6 @@
 package nl.andrewlalis.teaching_assistant_assistant.controllers.courses.entity;
 
+import nl.andrewlalis.teaching_assistant_assistant.controllers.UserPageController;
 import nl.andrewlalis.teaching_assistant_assistant.model.Course;
 import nl.andrewlalis.teaching_assistant_assistant.model.people.teams.StudentTeam;
 import nl.andrewlalis.teaching_assistant_assistant.model.repositories.CourseRepository;
@@ -22,7 +23,7 @@ import java.util.Optional;
  * Controller for importing students from a CSV sheet.
  */
 @Controller
-public class ImportStudents {
+public class ImportStudents extends UserPageController {
 
     private CourseRepository courseRepository;
 

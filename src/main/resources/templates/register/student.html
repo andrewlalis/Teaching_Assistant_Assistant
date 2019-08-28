@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Register as a New Student', content=~{::#content})}" lang="en">
+<body>
+
+<section id="content" class="container">
+    <div class="row">
+        <div class="col">
+            <p>
+                To register as a student, please fill out the form below. Make sure to double-check that all information is entered is accurate.
+            </p>
+            <p>
+                Where the form asks for a <em>Registration Code</em>, please provide the code that has been given to you by your lecturers. This code ensures that you'll join the right course.
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col">
+            <form action="/register/student" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="form-group">
+                    <label>
+                        Registration Code:
+                        <input type="text" name="registration_code" class="form-control">
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

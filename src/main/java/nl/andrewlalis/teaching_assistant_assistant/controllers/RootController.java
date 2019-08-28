@@ -2,18 +2,13 @@ package nl.andrewlalis.teaching_assistant_assistant.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RootController {
+public class RootController extends UserPageController {
 
-    @RequestMapping(
-            path = "/",
-            produces = "text/html"
-    )
+    @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("name", "JOHN");
-        return "index.html";
+        return "index";
     }
-
 }

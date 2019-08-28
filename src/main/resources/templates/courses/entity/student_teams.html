@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Teams</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Student Teams for ' + ${course.getCode()}, content=~{::#content}, actions=~{::#actions})}">
 <body>
 
-<div id="content">
-    <h1>Student Teams for <span th:text="${course.getName()}"></span></h1>
+<div id="actions">
+    <a class="btn btn-primary m-1"  th:href="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}">
+        Generate Repositories
+    </a>
+    <a class="btn btn-primary m-1"  th:href="@{/courses/{code}/student_teams/branch_protection_update(code=${course.getCode()})}">
+        Update Branch Protection
+    </a>
+    <a class="btn btn-primary m-1"  th:href="@{/courses/{code}/student_teams/export(code=${course.getCode()})}">
+        Export
+    </a>
+    <a class="btn btn-primary m-1"  th:href="@{/courses/{code}/student_teams/export_contact_info(code=${course.getCode()})}">
+        Export Team Contact Details
+    </a>
+    <a class="btn btn-primary m-1"  th:href="@{/courses/{code}/student_teams/create(code=${course.getCode()})}">
+        Create New Student Team
+    </a>
+    <a class="btn btn-primary m-1"  th:href="@{/courses/{code}/student_teams/merge_single_teams(code=${course.getCode()})}">
+        Merge Single Teams
+    </a>
+</div>
 
+<div id="content" class="row justify-content-center">
     <div th:if="${course.getStudentTeams().isEmpty()}">
         <p>No student teams.</p>
     </div>
-    <table>
+    <table class="table">
         <tr>
             <th>Team</th>
             <th>Students</th>
@@ -51,27 +66,6 @@
             </td>
         </tr>
     </table>
-</div>
-
-<div id="sidebar">
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/generate_repositories(code=${course.getCode()})}">Generate Repositories</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/branch_protection_update(code=${course.getCode()})}">Update Branch Protection</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/export(code=${course.getCode()})}">Export</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/export_contact_info(code=${course.getCode()})}">Export Team Contact Details</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/create(code=${course.getCode()})}">Create New Student Team</a>
-    </div>
-    <div class="sidebar_block">
-        <a th:href="@{/courses/{code}/student_teams/merge_single_teams(code=${course.getCode()})}">Merge Single Teams</a>
-    </div>
 </div>
 
 </body>

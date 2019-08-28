@@ -1,33 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Teaching Assistant</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title=${teachingAssistant.getFullName()}, content=~{::#content})}">
+
 <body>
 
-<div id="content">
-    <h1>Teaching Assistant: <span th:text="${teachingAssistant.getFullName()}"></span></h1>
-
-    <ul>
-        <li>
-            Email: <code th:text="${teachingAssistant.getEmailAddress()}"></code>
-        </li>
-        <li>
-            Github Username: <code th:text="${teachingAssistant.getGithubUsername()}"></code>
-        </li>
-        <li>
-            Courses:
-            <ul>
-                <li th:each="course: ${teachingAssistant.getCourses()}">
-                    <a th:href="@{/courses/{code}(code=${course.getCode()})}"><span th:text="${course.getName()}"></span></a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<div id="sidebar">
-
+<div id="content" class="row justify-content-center">
+    <div class="col-sm-12 col-md-6">
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" th:text="'Email: ' + ${teachingAssistant.getEmailAddress()}" th:href="'mailto: ' + ${teachingAssistant.getEmailAddress()}"></a>
+            <a class="list-group-item list-group-item-action" th:text="'Github Username: ' + ${teachingAssistant.getGithubUsername()}" th:href="'https://www.github.com/' + ${teachingAssistant.getGithubUsername()}" target="_blank"></a>
+            <div class="list-group-item">
+                <h5>Courses</h5>
+                <div th:each="course: ${teachingAssistant.getCourses()}">
+                    <a class="list-group-item-action" th:text="${course.getName()}" th:href="@{/courses/{code}(code=${course.getCode()})}"></a><br>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

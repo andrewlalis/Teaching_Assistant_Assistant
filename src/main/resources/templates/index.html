@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Homepage</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Home', content=~{::#content})}" lang="en">
 <body>
 
-<div id="content">
-    <p>
-        Welcome to the home page. To find the courses in this application please follow the link to <a th:href="@{/courses}">courses</a>.
-    </p>
-</div>
+<div id="content" class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h3>Welcome to the Teaching Assistant Assistant, <span th:text="${user.getPerson().getFullName()}"></span>.</h3>
 
-<div id="sidebar">
-    <div class="sidebar_block">
-        This is an example sidebar block.
-    </div>
-    <div id="generate_courses_block" class="sidebar_block">
-        <a href="/courses/generate">Click here to generate test data.</a>
-    </div>
-    <div class="sidebar_block">
-        Another sidebar block with a lot more text in it, so that the text should properly wrap to the next lines if needed.
+            <p>
+                To find the courses in this application please follow the link to <a th:href="@{/courses}">courses</a>.
+            </p>
+
+            <p>
+                This application makes it easy to sift through lots of student groups that are usually handled manually in some
+                spreadsheet. By integrating all data into one web application it is possible to access the information you need
+                faster, and make coordinated changes without fear of introducing inconsistencies or errors.
+            </p>
+        </div>
     </div>
 </div>
 

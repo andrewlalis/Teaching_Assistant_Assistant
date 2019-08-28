@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Assign To Student Teams</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Assign To Student Teams', content=~{::#content})}">
 <body>
 
-<div id="content">
+<div id="content" class="row justify-content-center">
     <form action="#" th:action="@{/courses/{code}/teaching_assistant_teams/assign_to_student_teams(code=${course.getCode()})}" enctype="application/x-www-form-urlencoded" method="post">
         <label for="seed_input">Random Seed:</label>
         <input id="seed_input" type="number" name="seed" value="0" required/>
         <button type="submit">Submit</button>
     </form>
-</div>
-
-<div id="sidebar">
-
 </div>
 
 </body>

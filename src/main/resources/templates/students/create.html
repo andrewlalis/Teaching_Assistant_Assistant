@@ -1,59 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (~{::title}, ~{::#content}, ~{::#sidebar})}">
-<head>
-    <title>Create a Student</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/basic_page :: layout (title='Create New Student', content=~{::#content})}">
+
 <body>
 
-<div id="content">
-    <h1>Create New Student</h1>
+<div id="content" class="row justify-content-center">
+    <div class="col-sm-12 col-md-6">
+        <form th:action="@{/students/create}" th:object="${student}" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="form-row">
+                <div class="col">
+                    <label for="student_first_name_input">First Name</label>
+                    <input id="student_first_name_input" class="form-control" type="text" th:field="*{firstName}" placeholder="Elon" required />
+                </div>
+                <div class="col">
+                    <label for="student_last_name_input">Last Name</label>
+                    <input id="student_last_name_input" class="form-control" type="text" th:field="*{lastName}" placeholder="Musk" required />
+                </div>
+            </div>
 
-    <form action="#" th:action="@{/students/create}" th:object="${student}" method="post" enctype="application/x-www-form-urlencoded">
-        <div class="page_row">
-            <label for="student_first_name_input">First Name:</label>
-            <input id="student_first_name_input" type="text" th:field="*{firstName}" required />
-        </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="student_email_input">Email Address</label>
+                    <input id="student_email_input" class="form-control" type="email" th:field="*{emailAddress}" placeholder="me@example.com" required />
+                </div>
+            </div>
 
-        <div class="page_row">
-            <label for="student_last_name_input">Last Name:</label>
-            <input id="student_last_name_input" type="text" th:field="*{lastName}" required />
-        </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="student_github_username_input">Github Username</label>
+                    <input id="student_github_username_input" class="form-control" type="text" th:field="*{githubUsername}" placeholder="username" required />
+                </div>
+            </div>
 
-        <div class="page_row">
-            <label for="student_email_input">Email Address:</label>
-            <input id="student_email_input" type="email" th:field="*{emailAddress}" required />
-        </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="student_number_input">Student Number</label>
+                    <input id="student_number_input" class="form-control" type="number" th:field="*{studentNumber}" value="" placeholder="1234567" required />
+                </div>
+            </div>
 
-        <div class="page_row">
-            <label for="student_github_username_input">Github Username:</label>
-            <input id="student_github_username_input" type="text" th:field="*{githubUsername}" required />
-        </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="student_course_select">Add this student to a course?</label>
+                    <select id="student_course_select" class="form-control" name="course_code">
+                        <option value="NO_COURSE_SELECTED">None</option>
+                        <option
+                                th:each="course: ${courses}"
+                                th:value="${course.getCode()}"
+                                th:text="${course.getName()}"
+                        ></option>
+                    </select>
+                    <small class="form-text text-muted">This can also be done later at this student's page.</small>
+                </div>
+            </div>
 
-        <div class="page_row">
-            <label for="student_number_input">Student Number:</label>
-            <input id="student_number_input" type="number" th:field="*{studentNumber}" required />
-        </div>
+            <div class="form-row mt-1">
+                <div class="col">
+                    <input class="btn btn-primary" type="submit" value="Submit" />
+                </div>
+            </div>
 
-        <div class="page_row">
-            <label for="student_course_select">Select a course to add the student to:</label>
-            <select id="student_course_select" name="course_code">
-                <option value="NO_COURSE_SELECTED">None</option>
-                <option
-                        th:each="course: ${courses}"
-                        th:value="${course.getCode()}"
-                        th:text="${course.getName()}"
-                ></option>
-            </select>
-        </div>
-
-        <div class="page_row">
-            <button type="submit">Submit</button>
-        </div>
-
-    </form>
-</div>
-
-<div id="sidebar">
+        </form>
+    </div>
 </div>
 
 </body>
